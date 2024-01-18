@@ -1,38 +1,99 @@
-.App {
+body{
+  background-color: #4E3629;
+}
+.banner{
+  display:flex;
+  width: 60%;
+  margin-top: 20px;
+  margin-left: 2%;  
+}
+.banner img{
+  display:flex;
+  width: 40%;
+  margin-top: 20px;
+  margin-left: 2%;
+}
+.week-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 5px;
+  margin-left: 3%;
+  margin-right: 3%;
+}
+.col {
+  flex: 1 1 10%; /* Adjust the width as per your design */
+  border: 1px solid #ddd;
+  margin: 10px;
+  padding: 15px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  background-color: #ffffff;
+}
+.col h3 {
+  color: #000000;
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.col .Ratty, .col .IvyRoom {
+  margin-top: 10px;
+  padding: 2px 8px;
+  border-radius: 10px;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.Ratty{
+  background-color: #ff8383;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.IvyRoom{
+  background-color: #93ff72;
+}
+.legend {
+  border-radius: 10px;
+  background-color: #b6b6b6;
+  padding: 10px;
+}
+.hall {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  margin-top: 10%;
+}
+.legend-color {
+  width: 50px;
+  height: 20px;
+  border-radius: 10%;
+  margin-right: 5px;
 }
 
-.App-link {
-  color: #61dafb;
+/* Define colors */
+.legend-red {
+  background-color: #ff8383;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.legend-green {
+  background-color: #93ff72;
+}
+
+.legend-blue {
+  background-color: #7291ff;
+}
+
+.legend-yellow {
+  background-color: #d072ff;
+}
+.filtering{
+  background-color: #b6b6b6;
+  height: fit-content;
+  padding: 8px;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-top: 5%;
+}
+/* Additional responsive adjustments */
+@media (max-width: 768px) {
+  .col {
+      flex: 1 1 45%; /* Wider on smaller screens */
   }
-  to {
-    transform: rotate(360deg);
+}
+
+@media (max-width: 480px) {
+  .col {
+      flex: 1 1 100%; /* Full width on very small screens */
   }
 }
