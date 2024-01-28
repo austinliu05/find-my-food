@@ -42,8 +42,7 @@ function App() {
     Saturday: {}
   });
   function fetchMenuItems(halls, meal) {
-    //https://apoxie.pythonanywhere.com/menu-items
-    fetch("http://127.0.0.1:5000/menu-items", {
+    fetch("https://apoxie.pythonanywhere.com/menu-items", {
       method: "POST",
       cache: "no-store",
       headers: {
