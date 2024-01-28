@@ -2,6 +2,20 @@ import './App.css';
 import { useState, useEffect } from 'react'
 import logo from './assets/BrownHeader.png'
 function App() {
+  // constants
+  const [meal, setMeal] = useState([])
+  // gets the current time and sets meal correspodingly
+  function getCurrentMealTime() {
+    const currentHour = new Date().getHours();
+    if (currentHour < 11 && currentHour > 0) {
+      return 'reakfast';
+    } else if (currentHour >= 11 && currentHour < 16) {
+      return 'lunch';
+    } else {
+      return 'dinner';
+    }
+  }
+
   const [filters, setFilters] = useState({
     Ratty: false,
     IvyRoom: false,
@@ -27,20 +41,20 @@ function App() {
     Friday: {},
     Saturday: {}
   });
-  function fetchMenuItems(data) {
-
-    fetch("https://apoxie.pythonanywhere.com/menu-items", {
+  function fetchMenuItems(halls, meal) {
+    //https://apoxie.pythonanywhere.com/menu-items
+    fetch("http://127.0.0.1:5000/menu-items", {
       method: "POST",
       cache: "no-store",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify({halls: halls, meal: meal})
     })
       .then(res => res.json())
       .then(responseData => {
         sortMeals(responseData);
-        console.log(responseData)
+        console.log("Response: " + responseData)
       })
       .catch(error => {
         console.error("Error sending data:", error);
@@ -74,14 +88,27 @@ function App() {
     });
     setMenuByDayAndHall(sortedMeals);
   }
-  function update(){
+  function update() {
     // filters the checkboxes that are marked true
-    const filterData = Object.keys(filters).filter(hall => filters[hall]);
-    console.log(filterData)
-    fetchMenuItems(filterData)
+    const halls = Object.keys(filters).filter(hall => filters[hall]);
+    console.log(halls, meal)
+    // Only call fetchMenuItems if halls is not empty
+    if (halls.length > 0) {
+      fetchMenuItems(halls, meal)
+    }
   }
   useEffect(() => {
     update();
+    const mealTime = getCurrentMealTime();
+    setMeal(mealTime);
+    // Update the meal state every hour to ensure it stays current
+    const intervalId = setInterval(() => {
+      const newMealTime = getCurrentMealTime();
+      setMeal(newMealTime);
+    }, 3600000); // 3600000 ms = 1 hour
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(intervalId);
   }, [filters]);
 
   return (
@@ -146,10 +173,10 @@ function App() {
       </div>
       <div className="week-container">
         {Object.entries(menuByDayAndHall).map(([day, halls]) => (
-          <div className="col"key={day}>
+          <div className="col" key={day}>
             <h3>{day}</h3>
             {Object.entries(halls).map(([hallName, items]) => (
-              <div className={hallName}key={hallName} >
+              <div className={hallName} key={hallName} >
                 {items.map(item => (
                   <p key={item.id}>{item.name}</p>
                 ))}
