@@ -3,12 +3,12 @@ import { useState, useEffect } from 'react'
 import logo from './assets/BrownHeader.png'
 function App() {
   // constants
-  const [meal, setMeal] = useState([])
+  const [meal, setMeal] = useState('breakfast')
   // gets the current time and sets meal correspodingly
   function getCurrentMealTime() {
     const currentHour = new Date().getHours();
     if (currentHour < 11 && currentHour > 0) {
-      return 'reakfast';
+      return 'breakfast';
     } else if (currentHour >= 11 && currentHour < 16) {
       return 'lunch';
     } else {
@@ -42,7 +42,9 @@ function App() {
     Saturday: {}
   });
   function fetchMenuItems(halls, meal) {
-    fetch("https://apoxie.pythonanywhere.com/menu-items", {
+    // http://127.0.0.1:5000/menu-items
+    // https://apoxie.pythonanywhere.com/menu-items
+    fetch("http://127.0.0.1:5000/menu-items", {
       method: "POST",
       cache: "no-store",
       headers: {
@@ -91,10 +93,7 @@ function App() {
     // filters the checkboxes that are marked true
     const halls = Object.keys(filters).filter(hall => filters[hall]);
     console.log(halls, meal)
-    // Only call fetchMenuItems if halls is not empty
-    if (halls.length > 0) {
-      fetchMenuItems(halls, meal)
-    }
+    fetchMenuItems(halls, meal)
   }
   useEffect(() => {
     update();
