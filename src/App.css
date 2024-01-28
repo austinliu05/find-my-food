@@ -57,6 +57,7 @@ body{
   padding: 10px;
   margin-right: 10%;
   width: 30%;
+  height: 40%;
 }
 .hall {
   display: flex;
@@ -93,6 +94,21 @@ body{
   margin-left: auto;
   margin-top: 5%;
   width: 80%;
+}
+.disclaimer{
+  width: 30%;
+  background-color: #f9c87a;
+  padding: 8px;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.disclaimer p{
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.clear{
+  margin-left: 10px;
 }
 /* Additional responsive adjustments */
 @media (max-width: 768px) {

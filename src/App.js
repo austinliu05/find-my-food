@@ -2,7 +2,7 @@ import './App.css';
 import { useState, useEffect } from 'react'
 import logo from './assets/BrownHeader.png'
 function App() {
-  // constants
+  // meal time
   const [meal, setMeal] = useState('breakfast')
   // gets the current time and sets meal correspodingly
   function getCurrentMealTime() {
@@ -15,6 +15,8 @@ function App() {
       return 'dinner';
     }
   }
+  // get current day
+  const [day, setDay] = useState()
 
   const [filters, setFilters] = useState({
     Ratty: false,
@@ -165,7 +167,7 @@ function App() {
               />
               VDub
             </label>
-            <button onClick={clearFilters}>Clear Filters</button>
+            <button className="clear" onClick={clearFilters}>Clear Filters</button>
           </form>
         </div>
       </div>
@@ -182,6 +184,9 @@ function App() {
             ))}
           </div>
         ))}
+      </div>
+      <div className='disclaimer'>
+        <p>Before 11am, only breakfast items are shown. Between 11am and 4pm, only lunch items are shown. After 4pm, only dinner items are shown.</p>
       </div>
     </div>
   );
