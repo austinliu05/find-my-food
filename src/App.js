@@ -1,13 +1,13 @@
 import './App.css';
 import { useState, useEffect } from 'react'
-import { isIvyOpen, getCurrentMealTime, capitalizeFirstLetter, isVDubOpen, isRattyAndrewsOpen, isAndrewsOpen, isRattyOpen } from './Utils';
+import { isIvyOpen, getCurrentMealTime, capitalizeFirstLetter, isVDubOpen, isRattyOpen, isAndrewsOpen } from './Utils';
 import Banner from './components/Banner'
 import WeekContainer from './components/WeekContainer'
-import { ivyHours, vdubHours, rattyHours, andrewsHours } from './constants';
+import {rattyHours, andrewsHours, ivyHours,vdubHours} from './constants'
 function App() {
   // get current day
   const currentDay = new Date().toLocaleDateString('en-US', { weekday: 'long' });
-  console.log("the day is" , currentDay)
+  console.log("The day is" , currentDay)
   // ratty
   const [ratty, setRatty] = useState()
   // andrews
