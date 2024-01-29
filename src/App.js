@@ -1,43 +1,30 @@
 import './App.css';
 import { useState, useEffect } from 'react'
-import logo from './assets/brown.png'
-import header from './assets/BrownHeader.png'
-
+import {getCurrentMealTime, capitalizeFirstLetter } from './Utils';
+import Banner from './components/Banner'
+import WeekContainer from './components/WeekContainer'
 function App() {
-  // meal time
-  const [meal, setMeal] = useState('breakfast')
-  // gets the current time and sets meal correspodingly
-  function getCurrentMealTime() {
-    const currentHour = new Date().getHours();
-    if (currentHour < 11 && currentHour > 0) {
-      return 'breakfast';
-    } else if (currentHour >= 11 && currentHour < 16) {
-      return 'lunch';
-    } else {
-      return 'dinner';
-    }
-  }
   // get current day
   const currentDay = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+  // vdub
+  const [vdub, setVdub] = useState()
+  // ratty
+  const [ratty, setRatty] = useState()
+  // ivy
+  const [ivy, setIvy] = useState()
+  // andrews
+  const [andrews, setAndrews] = useState()
+  // meal time
+  const [meal, setMeal] = useState('breakfast')
   // check if in mobile mode
   const [mobile, setMobile] = useState(window.innerWidth <= 430);
+
   const [filters, setFilters] = useState({
     Ratty: false,
     IvyRoom: false,
     Andrews: false,
     VDub: false
   });
-  function clearFilters() {
-    setFilters({
-      Ratty: false,
-      IvyRoom: false,
-      Andrews: false,
-      VDub: false
-    });
-  }
-  function isAnyFilterPressed(filters) {
-    return Object.values(filters).some(value => value === true);
-  }
   // State to store the sorted menu items by day and hall
   const [menuByDayAndHall, setMenuByDayAndHall] = useState({
     Sunday: {},
@@ -48,9 +35,64 @@ function App() {
     Friday: {},
     Saturday: {}
   });
-  // getting today's menu
   const todayMenu = menuByDayAndHall[currentDay]
+  function clearFilters() {
+    setFilters({
+      Ratty: false,
+      IvyRoom: false,
+      Andrews: false,
+      VDub: false
+    });
+  }
+  useEffect(() => {
+    // Update meal times every hour
+    const mealTime = getCurrentMealTime();
+    setMeal(mealTime);
 
+    const intervalId = setInterval(() => {
+      const newMealTime = getCurrentMealTime();
+      setMeal(newMealTime);
+    }, 3600000); // 3600000 ms = 1 hour
+
+    return () => clearInterval(intervalId);
+  }, []);
+  useEffect(() => {
+    update();
+    // update is called when filters change
+  }, [filters]);
+  useEffect(() => {
+    // Update Ivy's status based on time and day
+    // const updateIvyStatus = () => {
+    //   setIvy(isIvyOpen());
+    // };
+
+    // updateIvyStatus(); // Update on component mount
+
+    // // You might also want to update this at a regular interval
+    // const intervalId = setInterval(updateIvyStatus, 60000); // Update every minute
+
+    // return () => clearInterval(intervalId); // Clear interval on unmount
+  }, []);
+
+  useEffect(() => {
+    // Handle window resize
+    const handleResize = () => {
+      setMobile(window.innerWidth <= 430);
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Call immediately to set initial state
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // when filters change, fetch new items
+  function update() {
+    // filters the checkboxes that are marked true
+    const halls = Object.keys(filters).filter(hall => filters[hall]);
+    console.log(halls, meal)
+    fetchMenuItems(halls, meal)
+  }
   function fetchMenuItems(halls, meal) {
     // http://127.0.0.1:5000/menu-items
     // https://apoxie.pythonanywhere.com/menu-items
@@ -71,7 +113,6 @@ function App() {
         console.error("Error sending data:", error);
       });
   }
-
   function sortMeals(items) {
     const sortedMeals = {
       Sunday: {},
@@ -82,7 +123,6 @@ function App() {
       Friday: {},
       Saturday: {}
     };
-
     items.forEach(item => {
       const day = item.day;
       const hall = item.hall;
@@ -98,166 +138,16 @@ function App() {
     });
     setMenuByDayAndHall(sortedMeals);
   }
-  function update() {
-    // filters the checkboxes that are marked true
-    const halls = Object.keys(filters).filter(hall => filters[hall]);
-    console.log(halls, meal)
-    fetchMenuItems(halls, meal)
-  }
-  useEffect(() => {
-    const handleResize = () => {
-      setMobile(window.innerWidth <= 430);
-    };
 
-    // Add event listener
-    window.addEventListener('resize', handleResize);
-
-    // Call handler right away so state gets updated with initial window size
-    handleResize();
-
-    update();
-    const mealTime = getCurrentMealTime();
-    setMeal(mealTime);
-    // Update the meal state every hour to ensure it stays current
-    const intervalId = setInterval(() => {
-      const newMealTime = getCurrentMealTime();
-      setMeal(newMealTime);
-    }, 3600000); // 3600000 ms = 1 hour
-  }, [filters]);
-  // capitlize first letter
-  function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
-  // different logo based on screen size
-  function getPicture(){
-    if(mobile){
-      return logo
-    }else{
-      return header
-    }
-  }
   return (
     <div>
-      <div className='banner'>
-        <img className="logo" src={getPicture()} alt=''></img>
-        {mobile &&
-          <div className='dining-btns'>
-            <button
-              className="dining-btn"
-              onClick={() => {
-                setFilters(prevFilters => ({
-                  Ratty: !prevFilters.Ratty,
-                  IvyRoom: false,
-                  Andrews: false,
-                  VDub: false
-                }));}}
-            >Ratty</button>
-            <button className="dining-btn" onClick={() => {setFilters(prevFilters => ({
-              Ratty: false,
-              IvyRoom: false,
-              Andrews: !prevFilters.Andrews,
-              VDub: false
-            }))}}>Andrews</button>
-            <button className="dining-btn" onClick={() => {setFilters(prevFilters => ({
-              Ratty: false,
-              IvyRoom: !prevFilters.IvyRoom,
-              Andrews: false,
-              VDub: false
-            }))}}>Ivy Room</button>
-            <button className="dining-btn" onClick={() => {setFilters(prevFilters => ({
-              Ratty: false,
-              IvyRoom: false,
-              Andrews: false,
-              VDub: !prevFilters.VDub
-            }))}}>VDub</button>
-          </div>}
-        <div className='legend'>
-          <div className="hall">
-            <div className="legend-color legend-red"></div>
-            <span>- Ratty</span>
-          </div>
-          <div className="hall">
-            <div className="legend-color legend-green"></div>
-            <span>- Ivy Room</span>
-          </div>
-          <div className="hall">
-            <div className="legend-color legend-blue"></div>
-            <span>- Andrews</span>
-          </div>
-          <div className="hall">
-            <div className="legend-color legend-yellow"></div>
-            <span>- VDub</span>
-          </div>
-        </div>
-        <div className='filtering'>
-          <form>
-            <label>
-              <input
-                type="checkbox"
-                checked={filters.Ratty}
-                onChange={e => setFilters({ ...filters, Ratty: e.target.checked })}
-              />
-              Ratty
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                checked={filters.IvyRoom}
-                onChange={e => setFilters({ ...filters, IvyRoom: e.target.checked })}
-              />
-              IvyRoom
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                checked={filters.Andrews}
-                onChange={e => setFilters({ ...filters, Andrews: e.target.checked })}
-              />
-              Andrews
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                checked={filters.VDub}
-                onChange={e => setFilters({ ...filters, VDub: e.target.checked })}
-              />
-              VDub
-            </label>
-            <button className="clear" onClick={clearFilters}>Clear Filters</button>
-          </form>
-        </div>
-      </div>
-      {!mobile &&
-        <div className="week-container">
-          {Object.entries(menuByDayAndHall).map(([day, halls]) => (
-            <div className="col" key={day}>
-              <h3>{day}</h3>
-              {Object.entries(halls).map(([hallName, items]) => (
-                <div className={hallName} key={hallName} >
-                  {items.map(item => (
-                    <p key={item.id}>{item.name}</p>
-                  ))}
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>}
-      {mobile &&
-        <div className="week-container">
-          <div className="col" key={currentDay}>
-            <div className='day-label'>
-              <h3>{currentDay}</h3>
-              <p className='meal-info'>{capitalizeFirstLetter(meal)}</p>
-            </div>
-            {Object.entries(todayMenu).map(([hallName, items]) => (
-              <div className={hallName} key={hallName} >
-                {items.map(item => (
-                  <p key={item.id}>{item.name}</p>
-                ))}
-              </div>
-            ))}
-          </div>
-        </div>}
+      <Banner mobile={mobile} filters={filters} setFilters={setFilters} />
+      <WeekContainer 
+        mobile={mobile}
+        menuByDayAndHall={menuByDayAndHall}
+        meal={meal}
+        capitalizeFirstLetter={capitalizeFirstLetter} 
+        todayMenu = {todayMenu}/>
       <div className='disclaimer'>
         <p> **If no items show, dining hall isn't open (still working on UI)**</p>
         <p>**Updates every Monday morning**</p>
