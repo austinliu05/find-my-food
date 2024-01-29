@@ -7,7 +7,7 @@ import { ivyHours, vdubHours, rattyHours, andrewsHours } from './constants';
 function App() {
   // get current day
   const currentDay = new Date().toLocaleDateString('en-US', { weekday: 'long' });
-
+  console.log(currentDay)
   // ratty
   const [ratty, setRatty] = useState()
   // andrews
@@ -155,8 +155,8 @@ function App() {
       <Banner mobile={mobile} filters={filters} setFilters={setFilters} ratty={ratty} andrews={andrews} ivy={ivy} vdub={vdub} />
       <WeekContainer
         mobile={mobile}
-        menuByDayAndHall={menuByDayAndHall}
         currentDay={currentDay}
+        menuByDayAndHall={menuByDayAndHall}
         meal={meal}
         capitalizeFirstLetter={capitalizeFirstLetter}
         todayMenu={todayMenu} />
