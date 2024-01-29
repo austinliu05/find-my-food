@@ -113,21 +113,6 @@ function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
             <label>
               <input
                 type="checkbox"
-                checked={filters.ivy}
-                onChange={e => {
-                  if (!ivy) {
-                    e.preventDefault();
-                    alert('The IvyRoom is currently closed.');
-                    return;
-                  }
-                  handleDiningCheck('IvyRoom', ivy);
-                }}
-              />
-              IvyRoom
-            </label>
-            <label>
-              <input
-                type="checkbox"
                 checked={filters.Andrews}
                 onChange={e => {
                   if (!andrews) {
@@ -139,6 +124,21 @@ function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
                 }}
               />
               Andrews
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                checked={filters.ivy}
+                onChange={e => {
+                  if (!ivy) {
+                    e.preventDefault();
+                    alert('The IvyRoom is currently closed.');
+                    return;
+                  }
+                  handleDiningCheck('IvyRoom', ivy);
+                }}
+              />
+              IvyRoom
             </label>
             <label>
               <input
