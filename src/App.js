@@ -7,7 +7,7 @@ import { ivyHours, vdubHours, rattyHours, andrewsHours } from './constants';
 function App() {
   // get current day
   const currentDay = new Date().toLocaleDateString('en-US', { weekday: 'long' });
-  console.log(currentDay)
+  console.log("the day is" , currentDay)
   // ratty
   const [ratty, setRatty] = useState()
   // andrews
