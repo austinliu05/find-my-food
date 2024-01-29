@@ -1,6 +1,6 @@
 import './App.css';
 import { useState, useEffect } from 'react'
-import { isIvyOpen, getCurrentMealTime, capitalizeFirstLetter, isVDubOpen, isRattyOpen, isAndrewsOpen } from './Utils';
+import { isIvyOpen, getCurrentMealTime, capitalizeFirstLetter, isVDubOpen, isRattyOpen, isAndrewsOpen } from './utils';
 import Banner from './components/Banner'
 import WeekContainer from './components/WeekContainer'
 import {rattyHours, andrewsHours, ivyHours,vdubHours} from './constants'
