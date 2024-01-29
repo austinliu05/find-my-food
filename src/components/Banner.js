@@ -21,7 +21,7 @@ function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
       alert(`The ${hallName} is currently closed.`);
       return;
     }
-    if(hallName === "Ratty"){
+    if (hallName === "Ratty") {
       setFilters(prevFilters => ({
         Ratty: !prevFilters.Ratty,
         IvyRoom: false,
@@ -29,7 +29,7 @@ function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
         VDub: false
       }));
     }
-    if(hallName === "Andrews"){
+    if (hallName === "Andrews") {
       setFilters(prevFilters => ({
         Ratty: false,
         IvyRoom: false,
@@ -37,7 +37,7 @@ function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
         VDub: false
       }));
     }
-    if(hallName === "IvyRoom"){
+    if (hallName === "IvyRoom") {
       setFilters(prevFilters => ({
         Ratty: false,
         IvyRoom: !prevFilters.IvyRoom,
@@ -45,7 +45,7 @@ function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
         VDub: false
       }));
     }
-    if(hallName === "VDub"){
+    if (hallName === "VDub") {
       setFilters(prevFilters => ({
         Ratty: false,
         IvyRoom: false,
@@ -53,6 +53,16 @@ function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
         VDub: !prevFilters.VDub
       }));
     }
+  };
+  const handleDiningCheck = (hallName, isOpen) => {
+    if (!isOpen) {
+      alert(`The ${hallName} is currently closed.`);
+      return;
+    }
+    setFilters(prevFilters => ({
+      ...prevFilters,
+      [hallName]: !prevFilters[hallName],
+    }));
   };
   return (
     <div>
@@ -89,15 +99,29 @@ function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
               <input
                 type="checkbox"
                 checked={filters.Ratty}
-                onChange={e => setFilters({ ...filters, Ratty: e.target.checked })}
+                onChange={e => {
+                  if (!ratty) {
+                    e.preventDefault();
+                    alert('The Ratty is currently closed.');
+                    return;
+                  }
+                  handleDiningCheck('Ratty', ratty);
+                }}
               />
               Ratty
             </label>
             <label>
               <input
                 type="checkbox"
-                checked={filters.IvyRoom}
-                onChange={e => setFilters({ ...filters, IvyRoom: e.target.checked })}
+                checked={filters.ivy}
+                onChange={e => {
+                  if (!ivy) {
+                    e.preventDefault();
+                    alert('The IvyRoom is currently closed.');
+                    return;
+                  }
+                  handleDiningCheck('IvyRoom', ivy);
+                }}
               />
               IvyRoom
             </label>
@@ -105,7 +129,14 @@ function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
               <input
                 type="checkbox"
                 checked={filters.Andrews}
-                onChange={e => setFilters({ ...filters, Andrews: e.target.checked })}
+                onChange={e => {
+                  if (!andrews) {
+                    e.preventDefault();
+                    alert('The Andrews is currently closed.');
+                    return;
+                  }
+                  handleDiningCheck('Andrews', andrews);
+                }}
               />
               Andrews
             </label>
@@ -113,7 +144,14 @@ function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
               <input
                 type="checkbox"
                 checked={filters.VDub}
-                onChange={e => setFilters({ ...filters, VDub: e.target.checked })}
+                onChange={e => {
+                  if (!vdub) {
+                    e.preventDefault();
+                    alert('The VDub is currently closed.');
+                    return;
+                  }
+                  handleDiningCheck('VDub', vdub);
+                }}
               />
               VDub
             </label>
