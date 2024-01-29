@@ -1,20 +1,47 @@
 // utils.js
+// Function to check if Ratty is open
+export function isRattyOpen(hours) {
+  const now = new Date();
+  const currentHour = now.getHours() + now.getMinutes() / 60;
 
+  // Check if current time is within weekday operating hours
+  return currentHour >= hours.start && currentHour < hours.end;
+}
+// Function to checks if Andrews is open
+export function isAndrewsOpen(hours) {
+  const now = new Date();
+  const currentHour = now.getHours() + now.getMinutes() / 60;
+
+  // Check if current time is within weekday operating hours
+  return currentHour >= hours.start && currentHour < hours.end;
+}
 // Function to check if Ivy is open
-// export function isIvyOpen(ivyHours) {
-//   const now = new Date();
-//   const currentHour = now.getHours() + now.getMinutes() / 60;
-//   const dayOfWeek = now.getDay(); // Sunday - 0, Monday - 1, ..., Saturday - 6
+export function isIvyOpen(hours) {
+  const now = new Date();
+  const currentHour = now.getHours() + now.getMinutes() / 60;
+  const dayOfWeek = now.getDay(); // Sunday - 0, Monday - 1, ..., Saturday - 6
 
-//   // Closed all day on Saturdays
-//   if (dayOfWeek === 6) return false;
+  // Closed all day on Saturdays
+  if (dayOfWeek === 6) return false;
 
-//   // Open only in the evening on Sundays
-//   if (dayOfWeek === 0 && currentHour < 17) return false;
+  // Open only in the evening on Sundays (closed Sundays before 5pm)
+  if (dayOfWeek === 0 && currentHour < 17) return false;
 
-//   // Check if current time is within weekday operating hours
-//   return ivyHours.some(({ start, end }) => currentHour >= start && currentHour < end);
-// }
+  // Check if current time is within weekday operating hours
+  return hours.some(({ start, end }) => currentHour >= start && currentHour < end);
+}
+// Function to check if VDub is open
+export function isVDubOpen(hours) {
+  const now = new Date();
+  const currentHour = now.getHours() + now.getMinutes() / 60;
+  const dayOfWeek = now.getDay(); // Sunday - 0, Monday - 1, ..., Saturday - 6
+
+  // Closed all day on Saturdays
+  if (dayOfWeek === 6 || dayOfWeek === 0) return false;
+
+  // Check if current time is within weekday operating hours
+  return currentHour >= hours.start && currentHour < hours.end;
+}
 
 // Gets the current time and sets meal correspondingly
 export function getCurrentMealTime() {

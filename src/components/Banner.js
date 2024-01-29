@@ -2,7 +2,7 @@ import logo from '../assets/brown.png'
 import header from '../assets/BrownHeader.png'
 import '../App.css';
 
-function Banner({ mobile, filters, setFilters }) {
+function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
   function getPicture() {
     return mobile ? logo : header;
   }
@@ -15,47 +15,55 @@ function Banner({ mobile, filters, setFilters }) {
       VDub: false
     });
   }
+  const handleDiningClick = (hallName, isOpen) => {
+    console.log(`${hallName} Open:`, isOpen);
+    if (!isOpen) {
+      alert(`The ${hallName} is currently closed.`);
+      return;
+    }
+    if(hallName === "Ratty"){
+      setFilters(prevFilters => ({
+        Ratty: !prevFilters.Ratty,
+        IvyRoom: false,
+        Andrews: false,
+        VDub: false
+      }));
+    }
+    if(hallName === "Andrews"){
+      setFilters(prevFilters => ({
+        Ratty: false,
+        IvyRoom: false,
+        Andrews: !prevFilters.Andrews,
+        VDub: false
+      }));
+    }
+    if(hallName === "IvyRoom"){
+      setFilters(prevFilters => ({
+        Ratty: false,
+        IvyRoom: !prevFilters.IvyRoom,
+        Andrews: false,
+        VDub: false
+      }));
+    }
+    if(hallName === "VDub"){
+      setFilters(prevFilters => ({
+        Ratty: false,
+        IvyRoom: false,
+        Andrews: false,
+        VDub: !prevFilters.VDub
+      }));
+    }
+  };
   return (
     <div>
       <div className='banner'>
         <img className="logo" src={getPicture()} alt=''></img>
         {mobile &&
           <div className='dining-btns'>
-            <button
-              className="dining-btn"
-              onClick={() => {
-                setFilters(prevFilters => ({
-                  Ratty: !prevFilters.Ratty,
-                  IvyRoom: false,
-                  Andrews: false,
-                  VDub: false
-                }));
-              }}
-            >Ratty</button>
-            <button className="dining-btn" onClick={() => {
-              setFilters(prevFilters => ({
-                Ratty: false,
-                IvyRoom: false,
-                Andrews: !prevFilters.Andrews,
-                VDub: false
-              }))
-            }}>Andrews</button>
-            <button className="dining-btn" onClick={() => {
-              setFilters(prevFilters => ({
-                Ratty: false,
-                IvyRoom: !prevFilters.IvyRoom,
-                Andrews: false,
-                VDub: false
-              }))
-            }}>Ivy Room</button>
-            <button className="dining-btn" onClick={() => {
-              setFilters(prevFilters => ({
-                Ratty: false,
-                IvyRoom: false,
-                Andrews: false,
-                VDub: !prevFilters.VDub
-              }))
-            }}>VDub</button>
+            <button className="dining-btn" onClick={() => handleDiningClick('Ratty', ratty)}>Ratty</button>
+            <button className="dining-btn" onClick={() => handleDiningClick('Andrews', andrews)}>Andrews</button>
+            <button className="dining-btn" onClick={() => handleDiningClick('IvyRoom', ivy)}>Ivy Room</button>
+            <button className="dining-btn" onClick={() => handleDiningClick('VDub', vdub)}>VDub</button>
           </div>}
         <div className='legend'>
           <div className="hall">

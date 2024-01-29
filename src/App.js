@@ -1,19 +1,22 @@
 import './App.css';
 import { useState, useEffect } from 'react'
-import {getCurrentMealTime, capitalizeFirstLetter } from './Utils';
+import { isIvyOpen, getCurrentMealTime, capitalizeFirstLetter, isVDubOpen, isRattyAndrewsOpen, isAndrewsOpen, isRattyOpen } from './Utils';
 import Banner from './components/Banner'
 import WeekContainer from './components/WeekContainer'
+import { ivyHours, vdubHours, rattyHours, andrewsHours } from './constants';
 function App() {
   // get current day
   const currentDay = new Date().toLocaleDateString('en-US', { weekday: 'long' });
-  // vdub
-  const [vdub, setVdub] = useState()
+
   // ratty
   const [ratty, setRatty] = useState()
-  // ivy
-  const [ivy, setIvy] = useState()
   // andrews
   const [andrews, setAndrews] = useState()
+  // ivy
+  const [ivy, setIvy] = useState()
+  // vdub
+  const [vdub, setVdub] = useState()
+
   // meal time
   const [meal, setMeal] = useState('breakfast')
   // check if in mobile mode
@@ -44,6 +47,7 @@ function App() {
       VDub: false
     });
   }
+  // switching between breakfast, lunch and dinner
   useEffect(() => {
     // Update meal times every hour
     const mealTime = getCurrentMealTime();
@@ -56,22 +60,28 @@ function App() {
 
     return () => clearInterval(intervalId);
   }, []);
+  // communicating with the flask server
   useEffect(() => {
     update();
     // update is called when filters change
   }, [filters]);
+
+  // checking whether or not ivy room is open
   useEffect(() => {
-    // Update Ivy's status based on time and day
-    // const updateIvyStatus = () => {
-    //   setIvy(isIvyOpen());
-    // };
+    // Update Dining hall statuses based on time and day
+    const updateDiningHallStatus = () => {
+      setRatty(isRattyOpen(rattyHours));
+      setAndrews(isAndrewsOpen(andrewsHours));
+      setIvy(isIvyOpen(ivyHours));
+      setVdub(isVDubOpen(vdubHours));
+    };
 
-    // updateIvyStatus(); // Update on component mount
+    updateDiningHallStatus(); // Update on component mount
 
-    // // You might also want to update this at a regular interval
-    // const intervalId = setInterval(updateIvyStatus, 60000); // Update every minute
+    // You might also want to update this at a regular interval
+    const intervalId = setInterval(updateDiningHallStatus, 60000); // Update every minute
 
-    // return () => clearInterval(intervalId); // Clear interval on unmount
+    return () => clearInterval(intervalId); // Clear interval on unmount
   }, []);
 
   useEffect(() => {
@@ -113,6 +123,7 @@ function App() {
         console.error("Error sending data:", error);
       });
   }
+  // sorting the given json file into readable code for front end to easily parse and display
   function sortMeals(items) {
     const sortedMeals = {
       Sunday: {},
@@ -141,13 +152,14 @@ function App() {
 
   return (
     <div>
-      <Banner mobile={mobile} filters={filters} setFilters={setFilters} />
-      <WeekContainer 
+      <Banner mobile={mobile} filters={filters} setFilters={setFilters} ratty={ratty} andrews={andrews} ivy={ivy} vdub={vdub} />
+      <WeekContainer
         mobile={mobile}
         menuByDayAndHall={menuByDayAndHall}
+        currentDay={currentDay}
         meal={meal}
-        capitalizeFirstLetter={capitalizeFirstLetter} 
-        todayMenu = {todayMenu}/>
+        capitalizeFirstLetter={capitalizeFirstLetter}
+        todayMenu={todayMenu} />
       <div className='disclaimer'>
         <p> **If no items show, dining hall isn't open (still working on UI)**</p>
         <p>**Updates every Monday morning**</p>
