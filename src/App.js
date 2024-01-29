@@ -259,6 +259,7 @@ function App() {
           </div>
         </div>}
       <div className='disclaimer'>
+        <p> **If no items show, dining hall isn't open (still working on UI)**</p>
         <p>**Updates every Monday morning**</p>
         <p>Breakfast: before 11:00 am</p>
         <p>Lunch: 11:00am - 4:00 pm</p>
