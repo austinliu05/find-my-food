@@ -16,14 +16,11 @@ function App() {
     }
   }
   // get current day
-  const [day, setDay] = useState()
-  function getCurrentDay(){
-    const date = new Date();
-    const dayOfWeek = day.toLocaleString('en-us', { weekday: 'long' });
-    return dayOfWeek
-  }
+  const currentDay = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+  // no food state
+  const [open, setOpen] = useState(true)
   // check if in mobile mode
-  const [mobile, setMobile] = useState(false);
+  const [mobile, setMobile] = useState(window.innerWidth <= 430);
   const [filters, setFilters] = useState({
     Ratty: false,
     IvyRoom: false,
@@ -49,6 +46,9 @@ function App() {
     Friday: {},
     Saturday: {}
   });
+  // getting today's menu
+  const todayMenu = menuByDayAndHall[currentDay]
+
   function fetchMenuItems(halls, meal) {
     // http://127.0.0.1:5000/menu-items
     // https://apoxie.pythonanywhere.com/menu-items
@@ -104,6 +104,17 @@ function App() {
     fetchMenuItems(halls, meal)
   }
   useEffect(() => {
+
+    const handleResize = () => {
+      setMobile(window.innerWidth <= 430);
+    };
+
+    // Add event listener
+    window.addEventListener('resize', handleResize);
+
+    // Call handler right away so state gets updated with initial window size
+    handleResize();
+
     update();
     const mealTime = getCurrentMealTime();
     setMeal(mealTime);
@@ -112,15 +123,39 @@ function App() {
       const newMealTime = getCurrentMealTime();
       setMeal(newMealTime);
     }, 3600000); // 3600000 ms = 1 hour
-
-    // Cleanup interval on component unmount
-    return () => clearInterval(intervalId);
   }, [filters]);
 
   return (
     <div>
       <div className='banner'>
         <img src={logo} alt=''></img>
+        {mobile &&
+          <div>
+            <button className="dining-btn" onClick={() => setFilters(prevFilters => ({
+              Ratty: !prevFilters.Ratty,
+              IvyRoom: false,
+              Andrews: false,
+              VDub: false
+            }))}>Ratty</button>
+            <button className="dining-btn" onClick={() => setFilters(prevFilters => ({
+              Ratty: false,
+              IvyRoom: false,
+              Andrews: !prevFilters.Andrews,
+              VDub: false
+            }))}>Andrews</button>
+            <button className="dining-btn" onClick={() => setFilters(prevFilters => ({
+              Ratty: false,
+              IvyRoom: !prevFilters.IvyRoom,
+              Andrews: false,
+              VDub: false
+            }))}>Ivy Room</button>
+            <button className="dining-btn" onClick={() => setFilters(prevFilters => ({
+              Ratty: false,
+              IvyRoom: false,
+              Andrews: false,
+              VDub: !prevFilters.VDub
+            }))}>VDub</button>
+          </div>}
         <div className='legend'>
           <div className="hall">
             <div className="legend-color legend-red"></div>
@@ -177,11 +212,27 @@ function App() {
           </form>
         </div>
       </div>
-      <div className="week-container">
-        {Object.entries(menuByDayAndHall).map(([day, halls]) => (
-          <div className="col" key={day}>
-            <h3>{day}</h3>
-            {Object.entries(halls).map(([hallName, items]) => (
+      {!mobile &&
+        <div className="week-container">
+          {Object.entries(menuByDayAndHall).map(([day, halls]) => (
+            <div className="col" key={day}>
+              <h3>{day}</h3>
+              {Object.entries(halls).map(([hallName, items]) => (
+                <div className={hallName} key={hallName} >
+                  {items.map(item => (
+                    <p key={item.id}>{item.name}</p>
+                  ))}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>}
+      {mobile &&
+        <div className="week-container">
+          <div className="col" key={currentDay}>
+            <h3>{currentDay}</h3>
+            {!open && <p>Dining hall isn't open :(</p>}
+            {Object.entries(todayMenu).map(([hallName, items]) => (
               <div className={hallName} key={hallName} >
                 {items.map(item => (
                   <p key={item.id}>{item.name}</p>
@@ -189,10 +240,12 @@ function App() {
               </div>
             ))}
           </div>
-        ))}
-      </div>
+        </div>}
       <div className='disclaimer'>
-        <p>Before 11am, only breakfast items are shown. Between 11am and 4pm, only lunch items are shown. After 4pm, only dinner items are shown.</p>
+        <p>**Updates every Monday morning**</p>
+        <p>Breakfast: before 11:00 am</p>
+        <p>Lunch: 11:00am - 4:00 pm</p>
+        <p>Diner: after 4:00pm</p>
       </div>
     </div>
   );
