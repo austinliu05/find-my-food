@@ -1,15 +1,15 @@
 body{
   background-color: #4E3629;
 }
+
 .banner{
   display:flex;
-  width: 60%;
+  width: 80%;
   margin-top: 20px;
-  margin-left: 2%;  
 }
 .banner img{
   display:flex;
-  width: 40%;
+  width: 30%;
   margin-top: 20px;
   margin-left: 2%;
 }
@@ -56,7 +56,7 @@ body{
   background-color: #b6b6b6;
   padding: 10px;
   margin-right: 10%;
-  width: 30%;
+  width: 15%;
   height: 40%;
 }
 .hall {
@@ -91,9 +91,8 @@ body{
   height: fit-content;
   padding: 8px;
   border-radius: 10px;
-  margin-left: auto;
   margin-top: 5%;
-  width: 80%;
+  width: 35%;
 }
 .disclaimer{
   width: 30%;
@@ -117,8 +116,26 @@ body{
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 430px) {
   .col {
       flex: 1 1 100%; /* Full width on very small screens */
+  }
+  .legend{
+    display: none;
+  }
+  .filtering{
+    display: none;
+  }
+  .banner img{
+    width: 100%;
+    height: 10vh;
+  }
+  .disclaimer{
+    width: 70%;
+    background-color: #f9c87a;
+    padding: 8px;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
   }
 }

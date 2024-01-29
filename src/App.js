@@ -17,7 +17,13 @@ function App() {
   }
   // get current day
   const [day, setDay] = useState()
-
+  function getCurrentDay(){
+    const date = new Date();
+    const dayOfWeek = day.toLocaleString('en-us', { weekday: 'long' });
+    return dayOfWeek
+  }
+  // check if in mobile mode
+  const [mobile, setMobile] = useState(false);
   const [filters, setFilters] = useState({
     Ratty: false,
     IvyRoom: false,
@@ -52,7 +58,7 @@ function App() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({halls: halls, meal: meal})
+      body: JSON.stringify({ halls: halls, meal: meal })
     })
       .then(res => res.json())
       .then(responseData => {
