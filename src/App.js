@@ -1,6 +1,8 @@
 import './App.css';
 import { useState, useEffect } from 'react'
-import logo from './assets/BrownHeader.png'
+import logo from './assets/brown.png'
+import header from './assets/BrownHeader.png'
+
 function App() {
   // meal time
   const [meal, setMeal] = useState('breakfast')
@@ -17,8 +19,6 @@ function App() {
   }
   // get current day
   const currentDay = new Date().toLocaleDateString('en-US', { weekday: 'long' });
-  // no food state
-  const [open, setOpen] = useState(true)
   // check if in mobile mode
   const [mobile, setMobile] = useState(window.innerWidth <= 430);
   const [filters, setFilters] = useState({
@@ -35,7 +35,9 @@ function App() {
       VDub: false
     });
   }
-
+  function isAnyFilterPressed(filters) {
+    return Object.values(filters).some(value => value === true);
+  }
   // State to store the sorted menu items by day and hall
   const [menuByDayAndHall, setMenuByDayAndHall] = useState({
     Sunday: {},
@@ -84,7 +86,6 @@ function App() {
     items.forEach(item => {
       const day = item.day;
       const hall = item.hall;
-
       if (!filters[hall]) return; // Skip if the hall is not selected in the filters
 
       // Initialize the hall array if it doesn't exist
@@ -104,7 +105,6 @@ function App() {
     fetchMenuItems(halls, meal)
   }
   useEffect(() => {
-
     const handleResize = () => {
       setMobile(window.innerWidth <= 430);
     };
@@ -124,37 +124,52 @@ function App() {
       setMeal(newMealTime);
     }, 3600000); // 3600000 ms = 1 hour
   }, [filters]);
-
+  // capitlize first letter
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+  // different logo based on screen size
+  function getPicture(){
+    if(mobile){
+      return logo
+    }else{
+      return header
+    }
+  }
   return (
     <div>
       <div className='banner'>
-        <img src={logo} alt=''></img>
+        <img className="logo" src={getPicture()} alt=''></img>
         {mobile &&
-          <div>
-            <button className="dining-btn" onClick={() => setFilters(prevFilters => ({
-              Ratty: !prevFilters.Ratty,
-              IvyRoom: false,
-              Andrews: false,
-              VDub: false
-            }))}>Ratty</button>
-            <button className="dining-btn" onClick={() => setFilters(prevFilters => ({
+          <div className='dining-btns'>
+            <button
+              className="dining-btn"
+              onClick={() => {
+                setFilters(prevFilters => ({
+                  Ratty: !prevFilters.Ratty,
+                  IvyRoom: false,
+                  Andrews: false,
+                  VDub: false
+                }));}}
+            >Ratty</button>
+            <button className="dining-btn" onClick={() => {setFilters(prevFilters => ({
               Ratty: false,
               IvyRoom: false,
               Andrews: !prevFilters.Andrews,
               VDub: false
-            }))}>Andrews</button>
-            <button className="dining-btn" onClick={() => setFilters(prevFilters => ({
+            }))}}>Andrews</button>
+            <button className="dining-btn" onClick={() => {setFilters(prevFilters => ({
               Ratty: false,
               IvyRoom: !prevFilters.IvyRoom,
               Andrews: false,
               VDub: false
-            }))}>Ivy Room</button>
-            <button className="dining-btn" onClick={() => setFilters(prevFilters => ({
+            }))}}>Ivy Room</button>
+            <button className="dining-btn" onClick={() => {setFilters(prevFilters => ({
               Ratty: false,
               IvyRoom: false,
               Andrews: false,
               VDub: !prevFilters.VDub
-            }))}>VDub</button>
+            }))}}>VDub</button>
           </div>}
         <div className='legend'>
           <div className="hall">
@@ -230,8 +245,10 @@ function App() {
       {mobile &&
         <div className="week-container">
           <div className="col" key={currentDay}>
-            <h3>{currentDay}</h3>
-            {!open && <p>Dining hall isn't open :(</p>}
+            <div className='day-label'>
+              <h3>{currentDay}</h3>
+              <p className='meal-info'>{capitalizeFirstLetter(meal)}</p>
+            </div>
             {Object.entries(todayMenu).map(([hallName, items]) => (
               <div className={hallName} key={hallName} >
                 {items.map(item => (
