@@ -3,11 +3,11 @@ import { useState, useEffect } from 'react'
 import { isIvyOpen, getCurrentMealTime, capitalizeFirstLetter, isVDubOpen, isRattyOpen, isAndrewsOpen } from './utils';
 import Banner from './components/Banner'
 import WeekContainer from './components/WeekContainer'
-import {rattyHours, andrewsHours, ivyHours,vdubHours} from './constants'
+import { rattyHours, andrewsHours, ivyHours, vdubHours } from './constants'
 function App() {
   // get current day
   const currentDay = new Date().toLocaleDateString('en-US', { weekday: 'long' });
-  console.log("The day is" , currentDay)
+  console.log("The day is", currentDay)
   // ratty
   const [ratty, setRatty] = useState()
   // andrews
@@ -161,7 +161,6 @@ function App() {
         capitalizeFirstLetter={capitalizeFirstLetter}
         todayMenu={todayMenu} />
       <div className='disclaimer'>
-        <p> **If no items show, dining hall isn't open (still working on UI)**</p>
         <p>**Updates every Monday morning**</p>
         <p>Breakfast: before 11:00 am</p>
         <p>Lunch: 11:00am - 4:00 pm</p>

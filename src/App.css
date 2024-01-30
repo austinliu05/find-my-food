@@ -167,7 +167,7 @@ body {
   }
   .dining-btns{
     margin-top: 5vh;
-    margin-left: 5vh;
+    margin-left: 6vh;
   }
   .dining-btn {
     background-color: #eee;
@@ -209,6 +209,7 @@ body {
     padding: 0;
   }
   .logo{
+    margin-left: 2vh;
     width: 40%;
     height: 20vh;
   }
