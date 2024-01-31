@@ -76,10 +76,21 @@ function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
         <img className="logo" src={getPicture()} alt=''></img>
         {mobile &&
           <div className='dining-btns'>
-            <button className="dining-btn" onClick={() => handleDiningClick('Ratty', ratty)}>Ratty</button>
-            <button className="dining-btn" onClick={() => handleDiningClick('Andrews', andrews)}>Andrews</button>
-            <button className="dining-btn" onClick={() => handleDiningClick('IvyRoom', ivy)}>Ivy Room</button>
-            <button className="dining-btn" onClick={() => handleDiningClick('VDub', vdub)}>VDub</button>
+            <button className="dining-btn" disabled={!ratty} onClick={() => handleDiningClick('Ratty', ratty)}>Ratty
+              {!ratty && <p className='closed'>Closed</p>}
+              {ratty && <p className='open'>Open</p>}
+            </button>
+            <button className="dining-btn" disabled={!andrews} onClick={() => handleDiningClick('Andrews', andrews)}>Andrews
+            {!andrews && <p className='closed'>Closed</p>}
+            {andrews && <p className='open'>Open</p>}
+            </button>
+            <button className="dining-btn" disabled={!ivy} onClick={() => handleDiningClick('IvyRoom', ivy)}>Ivy Room
+            {!ivy && <p className='closed'>Closed</p>}</button>
+            {ivy && <p className='open'>Open</p>}
+            <button className="dining-btn" disabled={!vdub} onClick={() => handleDiningClick('VDub', vdub)}>VDub
+            {!vdub && <p className='closed'>Closed</p>}
+            {vdub && <p className='open'>Open</p>}
+            </button>
           </div>}
         <div className='legend'>
           <div className="hall">

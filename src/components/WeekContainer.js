@@ -38,7 +38,7 @@ function WeekContainer({ mobile, menuByDayAndHall, currentDay, meal, capitalizeF
                         {Object.entries(todayMenu).map(([hallName, categories]) => (
                             <div className={hallName} key={hallName}>
                                 {Object.entries(categories).map(([categoryName, items]) => (
-                                    <div className={categoryName} key={categoryName}>
+                                    <div className={`category ${categoryName}`} key={categoryName}>
                                         <h4>{categoryName}</h4>
                                         {items.map(item => (
                                             <p key={item.id}>{item.name}</p>
@@ -49,7 +49,6 @@ function WeekContainer({ mobile, menuByDayAndHall, currentDay, meal, capitalizeF
                         ))}
                     </div>
                 </div>}
-
         </div>
     );
 }

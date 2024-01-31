@@ -7,20 +7,24 @@ body {
   width: 80%;
   margin-top: 20px;
 }
+
 .meal-info {
   text-align: center;
 }
+
 .logo {
   display: flex;
   width: 30%;
   margin-top: 20px;
   margin-left: 2%;
 }
+
 .day-label h3,
 .day-label p {
   margin: 0;
   padding: 0;
 }
+
 .week-container {
   display: flex;
   flex-wrap: wrap;
@@ -157,6 +161,7 @@ body {
   .filtering {
     display: none;
   }
+
   .disclaimer {
     width: 70%;
     background-color: #f9c87a;
@@ -165,10 +170,12 @@ body {
     margin-left: auto;
     margin-right: auto;
   }
-  .dining-btns{
+
+  .dining-btns {
     margin-top: 5vh;
     margin-left: 6vh;
   }
+
   .dining-btn {
     background-color: #eee;
     border: none;
@@ -176,7 +183,7 @@ body {
     font-size: 1rem;
     width: 10em;
     border-radius: 1rem;
-    color: lightcoral;
+    color: rgb(13, 12, 12);
     box-shadow: 0 0.4rem #dfd9d9;
     cursor: pointer;
     margin-bottom: 20px;
@@ -189,14 +196,14 @@ body {
   }
 
   .dining-btn:hover:not(:disabled) {
-    background: lightcoral;
-    color: white;
+    background: #b2b2b2;
+    color: rgb(13, 12, 12);
     text-shadow: 0 0.1rem #bcb4b4;
   }
 
   .dining-btn:disabled {
     cursor: auto;
-    color: grey;
+    color: rgb(13, 12, 12);
   }
 
   .meal-info {
@@ -208,9 +215,53 @@ body {
     margin: 0;
     padding: 0;
   }
-  .logo{
+
+  .logo {
     margin-left: 2vh;
     width: 40%;
     height: 20vh;
+  }
+  .dining-btn p {
+    padding: 0;
+    margin: 0;
+    font-size: small;
+  }
+
+  .closed {
+    color: #c30000;
+  }
+  .open {
+    color: #1eb400;
+  }
+  .category{
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px; /* Space between categories */
+  }
+  .category h4{
+    padding: 0;
+    margin: 5px;
+  }
+  .category p{
+    padding: 0;
+    margin: 7px;
+  }
+  .Ratty,
+  .IvyRoom,
+  .Andrews,
+  .VDub {
+    background-color: transparent; /* or 'none' depending on your needs */
+  }
+  .Ratty .category{
+    background-color: #ff8383;
+  }
+  .Andrews .category{
+    background-color: #7291ff;
+  }
+  .Ivy .category{
+    background-color: #93ff72;
+  }
+  .VDub .category{
+    background-color: #d072ff;
   }
 }
