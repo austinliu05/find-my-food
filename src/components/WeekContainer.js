@@ -35,15 +35,21 @@ function WeekContainer({ mobile, menuByDayAndHall, currentDay, meal, capitalizeF
                             <h3>{currentDay}</h3>
                             <p className='meal-info'>{capitalizeFirstLetter(meal)}</p>
                         </div>
-                        {Object.entries(todayMenu).map(([hallName, items]) => (
-                            <div className={hallName} key={hallName} >
-                                {items.map(item => (
-                                    <p key={item.id}>{item.name}</p>
+                        {Object.entries(todayMenu).map(([hallName, categories]) => (
+                            <div className={hallName} key={hallName}>
+                                {Object.entries(categories).map(([categoryName, items]) => (
+                                    <div className={categoryName} key={categoryName}>
+                                        <h4>{categoryName}</h4>
+                                        {items.map(item => (
+                                            <p key={item.id}>{item.name}</p>
+                                        ))}
+                                    </div>
                                 ))}
                             </div>
                         ))}
                     </div>
                 </div>}
+
         </div>
     );
 }
