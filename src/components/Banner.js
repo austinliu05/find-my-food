@@ -3,6 +3,7 @@ import header from '../assets/BrownHeader.png'
 import '../App.css';
 
 function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
+  // changes the logo based on the screen size
   function getPicture() {
     return mobile ? logo : header;
   }
@@ -15,12 +16,15 @@ function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
       VDub: false
     });
   }
+  // if the dining hall button is clicked
   const handleDiningClick = (hallName, isOpen) => {
     console.log(`${hallName} Open:`, isOpen);
+    // check if its open
     if (!isOpen) {
       alert(`The ${hallName} is currently closed.`);
       return;
     }
+    // only filter for the corresponding dining hall
     if (hallName === "Ratty") {
       setFilters(prevFilters => ({
         Ratty: !prevFilters.Ratty,
@@ -54,14 +58,16 @@ function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
       }));
     }
   };
+  // similar function but for the desktop view
   const handleDiningCheck = (hallName, isOpen) => {
     if (!isOpen) {
       alert(`The ${hallName} is currently closed.`);
       return;
     }
+    // keeps all other filters the same
     setFilters(prevFilters => ({
       ...prevFilters,
-      [hallName]: !prevFilters[hallName],
+      [hallName]: !prevFilters[hallName], //only adjusts selected filter
     }));
   };
   return (
@@ -98,14 +104,14 @@ function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
             <label>
               <input
                 type="checkbox"
-                checked={filters.Ratty}
-                onChange={e => {
-                  if (!ratty) {
-                    e.preventDefault();
-                    alert('The Ratty is currently closed.');
+                checked={filters.Ratty} // shows checked depending if the user has clicked it or not
+                onChange={e => { // whenever the user changes the state (by clicking)
+                  if (!ratty) { // if ratty is not open
+                    e.preventDefault(); //prevent the default action of updating the checked status (prevent user from checking the box)
+                    alert('The Ratty is currently closed.'); //alert use that dining hall is closed
                     return;
                   }
-                  handleDiningCheck('Ratty', ratty);
+                  handleDiningCheck('Ratty', ratty); //else, run the function and update the status
                 }}
               />
               Ratty

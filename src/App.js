@@ -7,7 +7,7 @@ import { rattyHours, andrewsHours, ivyHours, vdubHours } from './constants'
 function App() {
   // get current day
   const currentDay = new Date().toLocaleDateString('en-US', { weekday: 'long' });
-  console.log("The day is", currentDay)
+  // Booleans to check if the dining halls are open or not
   // ratty
   const [ratty, setRatty] = useState()
   // andrews
@@ -22,6 +22,7 @@ function App() {
   // check if in mobile mode
   const [mobile, setMobile] = useState(window.innerWidth <= 430);
 
+  // Which dining halls are selected
   const [filters, setFilters] = useState({
     Ratty: false,
     IvyRoom: false,
@@ -38,6 +39,7 @@ function App() {
     Friday: {},
     Saturday: {}
   });
+  // gets the menu for the current day
   const todayMenu = menuByDayAndHall[currentDay]
   function clearFilters() {
     setFilters({
@@ -117,7 +119,7 @@ function App() {
       .then(res => res.json())
       .then(responseData => {
         sortMeals(responseData);
-        console.log("Response: " + responseData)
+        console.log("Response: " + menuByDayAndHall)
       })
       .catch(error => {
         console.error("Error sending data:", error);
@@ -137,15 +139,24 @@ function App() {
     items.forEach(item => {
       const day = item.day;
       const hall = item.hall;
-      if (!filters[hall]) return; // Skip if the hall is not selected in the filters
-
-      // Initialize the hall array if it doesn't exist
-      if (!sortedMeals[day][hall]) {
-        sortedMeals[day][hall] = [];
+      const category = item.category
+      console.log(category)
+      // Ensure the 'day' object is initialized
+      if (!sortedMeals[day]) {
+        sortedMeals[day] = {};
       }
 
+      // Ensure the 'hall' object within the 'day' object is initialized
+      if (!sortedMeals[day][hall]) {
+        sortedMeals[day][hall] = {};
+      }
+
+      // Ensure the 'category' array within the 'hall' object is initialized
+      if (!sortedMeals[day][hall][category]) {
+        sortedMeals[day][hall][category] = [];
+      }
       // Push the item to the respective hall array
-      sortedMeals[day][hall].push(item);
+      sortedMeals[day][hall][category].push(item);
     });
     setMenuByDayAndHall(sortedMeals);
   }
