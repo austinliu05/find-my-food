@@ -110,13 +110,13 @@ function App() {
   function fetchMenuItems(halls, meal) {
     // http://127.0.0.1:5000/menu-items
     // https://apoxie.pythonanywhere.com/menu-items
-    fetch("https://apoxie.pythonanywhere.com/menu-items", {
+    fetch("http://127.0.0.1:5000/menu-items", {
       method: "POST",
       cache: "no-store",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ halls: halls, meal: meal })
+      body: JSON.stringify({ type: "fetchMenu", halls: halls, meal: meal })
     })
       .then(res => res.json())
       .then(responseData => {
@@ -160,7 +160,7 @@ function App() {
       // Extend the item object with a 'votes' property
       const itemWithVotes = {
         ...item,
-        votes: itemVotes || 0 // Use the votes from the item, or initialize to 0 if undefined
+        votes: itemVotes
       };
 
       // Push the item to the respective hall array
@@ -172,28 +172,53 @@ function App() {
   const [votes, setVotes] = useState({});
   const [voteStatus, setVoteStatus] = useState({});
   const handleUpvote = (itemId) => {
+    setVotes(prevVotes => {
+      const updatedVotes = {
+        ...prevVotes,
+        [itemId]: (prevVotes[itemId] || 0) + 1
+      };
+      updateVote(itemId, updatedVotes[itemId]);
+      return updatedVotes;
+    });
     setVoteStatus(prevStatus => ({
       ...prevStatus,
       [itemId]: 'upvoted'
     }));
-    // Increment the vote in your votes state as well
-    setVotes(prevVotes => ({
-      ...prevVotes,
-      [itemId]: (prevVotes[itemId] || 0) + 1
-    }));
   };
 
   const handleDownvote = (itemId) => {
+    setVotes(prevVotes => {
+      const updatedVotes = {
+        ...prevVotes,
+        [itemId]: (prevVotes[itemId] || 0) - 1
+      };
+      updateVote(itemId, updatedVotes[itemId]);
+      return updatedVotes;
+    });
     setVoteStatus(prevStatus => ({
       ...prevStatus,
       [itemId]: 'downvoted'
     }));
-    // Decrement the vote in your votes state as well
-    setVotes(prevVotes => ({
-      ...prevVotes,
-      [itemId]: (prevVotes[itemId] || 0) - 1
-    }));
   };
+  function updateVote(itemId, votes) {
+    console.log(itemId, votes)
+    // http://127.0.0.1:5000/menu-items
+    // https://apoxie.pythonanywhere.com/menu-items
+    fetch("http://127.0.0.1:5000/menu-items", {
+      method: "POST",
+      cache: "no-store",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ type: "updateVote", itemId: itemId, votes: votes })
+    })
+      .then(res => res.json())
+      .then(responseData => {
+      })
+      .catch(error => {
+        console.error("Error sending vote data:", error);
+      });
+  }
   return (
     <div>
       <Banner mobile={mobile} filters={filters} setFilters={setFilters} ratty={ratty} andrews={andrews} ivy={ivy} vdub={vdub} />

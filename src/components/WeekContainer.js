@@ -48,7 +48,7 @@ function WeekContainer({ mobile, menuByDayAndHall, currentDay, meal, capitalizeF
                                                         className={voteStatus[item.id] === 'upvoted' ? 'upvoted' : ''}
                                                         onClick={() => handleUpvote(item.id)}
                                                     />
-                                                    <p>{votes[item.id] || 0}</p>
+                                                    <p>{item.votes}</p>
                                                     <img
                                                         src={downvote}
                                                         alt="Downvote"
