@@ -4,6 +4,8 @@ import { isIvyOpen, getCurrentMealTime, capitalizeFirstLetter, isVDubOpen, isRat
 import Banner from './components/Banner'
 import WeekContainer from './components/WeekContainer'
 import { rattyHours, andrewsHours, ivyHours, vdubHours } from './constants'
+import upvote from './assets/upvote.png'
+import downvote from './assets/downvote.png'
 function App() {
   // get current day
   const currentDay = new Date().toLocaleDateString('en-US', { weekday: 'long' });
@@ -140,7 +142,7 @@ function App() {
       const day = item.day;
       const hall = item.hall;
       const category = item.category
-      console.log(category)
+      const itemVotes = item.votes
       // Ensure the 'day' object is initialized
       if (!sortedMeals[day]) {
         sortedMeals[day] = {};
@@ -155,12 +157,43 @@ function App() {
       if (!sortedMeals[day][hall][category]) {
         sortedMeals[day][hall][category] = [];
       }
+      // Extend the item object with a 'votes' property
+      const itemWithVotes = {
+        ...item,
+        votes: itemVotes || 0 // Use the votes from the item, or initialize to 0 if undefined
+      };
+
       // Push the item to the respective hall array
-      sortedMeals[day][hall][category].push(item);
+      sortedMeals[day][hall][category].push(itemWithVotes);
     });
     setMenuByDayAndHall(sortedMeals);
   }
+  // Initialize state for vote counts
+  const [votes, setVotes] = useState({});
+  const [voteStatus, setVoteStatus] = useState({});
+  const handleUpvote = (itemId) => {
+    setVoteStatus(prevStatus => ({
+      ...prevStatus,
+      [itemId]: 'upvoted'
+    }));
+    // Increment the vote in your votes state as well
+    setVotes(prevVotes => ({
+      ...prevVotes,
+      [itemId]: (prevVotes[itemId] || 0) + 1
+    }));
+  };
 
+  const handleDownvote = (itemId) => {
+    setVoteStatus(prevStatus => ({
+      ...prevStatus,
+      [itemId]: 'downvoted'
+    }));
+    // Decrement the vote in your votes state as well
+    setVotes(prevVotes => ({
+      ...prevVotes,
+      [itemId]: (prevVotes[itemId] || 0) - 1
+    }));
+  };
   return (
     <div>
       <Banner mobile={mobile} filters={filters} setFilters={setFilters} ratty={ratty} andrews={andrews} ivy={ivy} vdub={vdub} />
@@ -170,7 +203,13 @@ function App() {
         menuByDayAndHall={menuByDayAndHall}
         meal={meal}
         capitalizeFirstLetter={capitalizeFirstLetter}
-        todayMenu={todayMenu} />
+        todayMenu={todayMenu}
+        upvote={upvote}
+        downvote={downvote}
+        handleUpvote={handleUpvote}
+        handleDownvote={handleDownvote}
+        voteStatus={voteStatus}
+        votes={votes} />
       <div className='disclaimer'>
         <p>**Updates every Monday morning**</p>
         <p>Breakfast: before 11:00 am</p>

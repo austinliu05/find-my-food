@@ -1,7 +1,5 @@
 import '../App.css';
-
-function WeekContainer({ mobile, menuByDayAndHall, currentDay, meal, capitalizeFirstLetter, todayMenu }) {
-
+function WeekContainer({ mobile, menuByDayAndHall, currentDay, meal, capitalizeFirstLetter, todayMenu, upvote, downvote, handleUpvote, handleDownvote, voteStatus, votes }) {
     return (
         <div>
             {!mobile &&
@@ -41,7 +39,24 @@ function WeekContainer({ mobile, menuByDayAndHall, currentDay, meal, capitalizeF
                                     <div className={`category ${categoryName}`} key={categoryName}>
                                         <h4>{categoryName}</h4>
                                         {items.map(item => (
-                                            <p key={item.id}>{item.name}</p>
+                                            <div key={item.id} className="item-container">
+                                                <p>{item.name}</p>
+                                                {/* <div className="vote">
+                                                    <img
+                                                        src={upvote}
+                                                        alt="Upvote"
+                                                        className={voteStatus[item.id] === 'upvoted' ? 'upvoted' : ''}
+                                                        onClick={() => handleUpvote(item.id)}
+                                                    />
+                                                    <p>{votes[item.id] || 0}</p>
+                                                    <img
+                                                        src={downvote}
+                                                        alt="Downvote"
+                                                        className={voteStatus[item.id] === 'downvoted' ? 'downvoted' : ''}
+                                                        onClick={() => handleDownvote(item.id)}
+                                                    />
+                                                </div> */}
+                                            </div>
                                         ))}
                                     </div>
                                 ))}

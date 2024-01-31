@@ -226,12 +226,35 @@ body {
     margin: 0;
     font-size: small;
   }
-
   .closed {
     color: #c30000;
   }
   .open {
     color: #1eb400;
+  }
+  .item-container {
+    display: flex;
+    align-items: center; /* This will vertically center align the items */
+    justify-content: space-between; /* This will place the content on either end; adjust as needed */
+  }  
+  .item-container p {
+    margin-right: 10px; /* Adds some space between the item name and the vote buttons */
+    flex: 1; /* Allows the paragraph to take up as much space as it can, pushing the vote section to the end */
+  }
+  
+  .vote {
+    display: flex; /* Aligns the vote buttons in a row */
+    align-items: center; /* Vertically centers the vote buttons */
+  }
+  
+  .vote img {
+    width: auto; 
+    height: 1em; /* Sets the height of the arrow images relative to the font size */
+    margin: 0 5px; /* Adds space between the arrows */
+  }
+  
+  .vote p {
+    margin: 0; 
   }
   .category{
     border-radius: 8px;

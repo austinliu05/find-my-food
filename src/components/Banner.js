@@ -85,8 +85,8 @@ function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
             {andrews && <p className='open'>Open</p>}
             </button>
             <button className="dining-btn" disabled={!ivy} onClick={() => handleDiningClick('IvyRoom', ivy)}>Ivy Room
-            {!ivy && <p className='closed'>Closed</p>}</button>
-            {ivy && <p className='open'>Open</p>}
+            {!ivy && <p className='closed'>Closed</p>}
+            {ivy && <p className='open'>Open</p>}</button>
             <button className="dining-btn" disabled={!vdub} onClick={() => handleDiningClick('VDub', vdub)}>VDub
             {!vdub && <p className='closed'>Closed</p>}
             {vdub && <p className='open'>Open</p>}
