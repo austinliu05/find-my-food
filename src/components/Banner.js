@@ -7,7 +7,6 @@ function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
   function getPicture() {
     return mobile ? logo : header;
   }
-
   function clearFilters() {
     setFilters({
       Ratty: false,

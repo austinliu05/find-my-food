@@ -1,29 +1,30 @@
 import './App.css';
 import { useState, useEffect } from 'react'
-import { isIvyOpen, getCurrentMealTime, capitalizeFirstLetter, isVDubOpen, isRattyOpen, isAndrewsOpen } from './utils';
+import { capitalizeFirstLetter } from './utils';
+import useDiningStatus from './hooks/useDiningStatus';
+import useScreenStatus from './hooks/useScreenStatus';
+import useMealStatus from './hooks/useMealStatus';
 import Banner from './components/Banner'
-import WeekContainer from './components/WeekContainer'
-import { rattyHours, andrewsHours, ivyHours, vdubHours } from './constants'
-import upvote from './assets/upvote.png'
-import downvote from './assets/downvote.png'
+import DesktopContainer from './components/DesktopContainer'
+import MobileContainer from './components/MobileContainer'
+
+import { fetchMenuItems, updateVote } from './api';
+import upArrow from './assets/upArrow.png'
+import downArrow from './assets/downArrow.png'
+import upvoted from './assets/upvoted.png'
+import downvoted from './assets/downvoted.png'
+
 function App() {
+  // checking if dining halls are open
+  const diningStatus = useDiningStatus();
+  // chcek whether or not the device is mobile or desktop
+  const mobileStatus = useScreenStatus();
+  // retrieve the meal status
+  const meal = useMealStatus();
   // get current day
   const currentDay = new Date().toLocaleDateString('en-US', { weekday: 'long' });
-  // Booleans to check if the dining halls are open or not
-  // ratty
-  const [ratty, setRatty] = useState()
-  // andrews
-  const [andrews, setAndrews] = useState()
-  // ivy
-  const [ivy, setIvy] = useState()
-  // vdub
-  const [vdub, setVdub] = useState()
-
-  // meal time
-  const [meal, setMeal] = useState('breakfast')
-  // check if in mobile mode
-  const [mobile, setMobile] = useState(window.innerWidth <= 430);
-
+  // checking if arrow is clicked
+  const [clicked, setClicked] = useState(false);
   // Which dining halls are selected
   const [filters, setFilters] = useState({
     Ratty: false,
@@ -41,92 +42,17 @@ function App() {
     Friday: {},
     Saturday: {}
   });
-  // gets the menu for the current day
-  const todayMenu = menuByDayAndHall[currentDay]
-  function clearFilters() {
-    setFilters({
-      Ratty: false,
-      IvyRoom: false,
-      Andrews: false,
-      VDub: false
-    });
-  }
-  // switching between breakfast, lunch and dinner
-  useEffect(() => {
-    // Update meal times every hour
-    const mealTime = getCurrentMealTime();
-    setMeal(mealTime);
-
-    const intervalId = setInterval(() => {
-      const newMealTime = getCurrentMealTime();
-      setMeal(newMealTime);
-    }, 3600000); // 3600000 ms = 1 hour
-
-    return () => clearInterval(intervalId);
-  }, []);
   // communicating with the flask server
   useEffect(() => {
     update();
     // update is called when filters change
   }, [filters]);
 
-  // checking whether or not ivy room is open
-  useEffect(() => {
-    // Update Dining hall statuses based on time and day
-    const updateDiningHallStatus = () => {
-      setRatty(isRattyOpen(rattyHours));
-      setAndrews(isAndrewsOpen(andrewsHours));
-      setIvy(isIvyOpen(ivyHours));
-      setVdub(isVDubOpen(vdubHours));
-    };
+  // gets the menu for the current day
+  const todayMenu = menuByDayAndHall[currentDay]
 
-    updateDiningHallStatus(); // Update on component mount
-
-    // You might also want to update this at a regular interval
-    const intervalId = setInterval(updateDiningHallStatus, 60000); // Update every minute
-
-    return () => clearInterval(intervalId); // Clear interval on unmount
-  }, []);
-
-  useEffect(() => {
-    // Handle window resize
-    const handleResize = () => {
-      setMobile(window.innerWidth <= 430);
-    };
-
-    window.addEventListener('resize', handleResize);
-    handleResize(); // Call immediately to set initial state
-
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  // when filters change, fetch new items
-  function update() {
-    // filters the checkboxes that are marked true
-    const halls = Object.keys(filters).filter(hall => filters[hall]);
-    console.log(halls, meal)
-    fetchMenuItems(halls, meal)
-  }
-  function fetchMenuItems(halls, meal) {
-    // http://127.0.0.1:5000/menu-items
-    // https://apoxie.pythonanywhere.com/menu-items
-    fetch("http://127.0.0.1:5000/menu-items", {
-      method: "POST",
-      cache: "no-store",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ type: "fetchMenu", halls: halls, meal: meal })
-    })
-      .then(res => res.json())
-      .then(responseData => {
-        sortMeals(responseData);
-        console.log("Response: " + menuByDayAndHall)
-      })
-      .catch(error => {
-        console.error("Error sending data:", error);
-      });
-  }
+  // Initialize state for vote counts
+  const [votes, setVotes] = useState([]);
   // sorting the given json file into readable code for front end to easily parse and display
   function sortMeals(items) {
     const sortedMeals = {
@@ -138,11 +64,12 @@ function App() {
       Friday: {},
       Saturday: {}
     };
+    const sortedVotes = []
     items.forEach(item => {
       const day = item.day;
       const hall = item.hall;
       const category = item.category
-      const itemVotes = item.votes
+
       // Ensure the 'day' object is initialized
       if (!sortedMeals[day]) {
         sortedMeals[day] = {};
@@ -157,84 +84,93 @@ function App() {
       if (!sortedMeals[day][hall][category]) {
         sortedMeals[day][hall][category] = [];
       }
-      // Extend the item object with a 'votes' property
-      const itemWithVotes = {
-        ...item,
-        votes: itemVotes
-      };
-
+      sortedVotes[item.id] = item.votes
       // Push the item to the respective hall array
-      sortedMeals[day][hall][category].push(itemWithVotes);
+      sortedMeals[day][hall][category].push(item);
     });
+    setVotes(sortedVotes);
     setMenuByDayAndHall(sortedMeals);
   }
-  // Initialize state for vote counts
-  const [votes, setVotes] = useState({});
-  const [voteStatus, setVoteStatus] = useState({});
-  const handleUpvote = (itemId) => {
-    setVotes(prevVotes => {
-      const updatedVotes = {
-        ...prevVotes,
-        [itemId]: (prevVotes[itemId] || 0) + 1
-      };
-      updateVote(itemId, updatedVotes[itemId]);
-      return updatedVotes;
-    });
-    setVoteStatus(prevStatus => ({
-      ...prevStatus,
-      [itemId]: 'upvoted'
-    }));
-  };
-
-  const handleDownvote = (itemId) => {
-    setVotes(prevVotes => {
-      const updatedVotes = {
-        ...prevVotes,
-        [itemId]: (prevVotes[itemId] || 0) - 1
-      };
-      updateVote(itemId, updatedVotes[itemId]);
-      return updatedVotes;
-    });
-    setVoteStatus(prevStatus => ({
-      ...prevStatus,
-      [itemId]: 'downvoted'
-    }));
-  };
-  function updateVote(itemId, votes) {
-    console.log(itemId, votes)
-    // http://127.0.0.1:5000/menu-items
-    // https://apoxie.pythonanywhere.com/menu-items
-    fetch("http://127.0.0.1:5000/menu-items", {
-      method: "POST",
-      cache: "no-store",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ type: "updateVote", itemId: itemId, votes: votes })
-    })
-      .then(res => res.json())
-      .then(responseData => {
-      })
+  // fetching data from the server
+  const update = () => {
+    const halls = Object.keys(filters).filter(hall => filters[hall]);
+    fetchMenuItems(halls, meal)
+      .then(sortMeals) // After fetching, pass the data to sortMeals
       .catch(error => {
-        console.error("Error sending vote data:", error);
+        console.error("Error sending data:", error);
       });
+  };
+  function changeVote(itemId, delta) {
+    setVotes(prevVotes => ({
+      ...prevVotes,
+      [itemId]: prevVotes[itemId] + delta,
+    }));
   }
+  // Function to handle voting
+  const handleVote = (itemId, isUpvote) => {
+    // 
+    if (!clicked[itemId]) {
+      setVotes(prevVotes => ({
+        ...prevVotes,
+        [itemId]: prevVotes[itemId] + (isUpvote ? 1 : -1),
+      }));
+    } else if (clicked[itemId] === "upvoted" && !isUpvote) {
+      changeVote(itemId, -1)
+    } else if (clicked[itemId] === "downvoted" && isUpvote) {
+      changeVote(itemId, 1)
+    }
+    if (isUpvote) {
+      if (!clicked[itemId]) {
+        setClicked((prev) => ({ ...prev, [itemId]: "upvoted" }));
+      } else {
+        setClicked((prev) => ({ ...prev, [itemId]: "" }));
+        changeVote(itemId, -1)
+      }
+    } else {
+      if (!clicked[itemId]) {
+        setClicked((prev) => ({ ...prev, [itemId]: "downvoted" }));
+      } else {
+        setClicked((prev) => ({ ...prev, [itemId]: "" }));
+        changeVote(itemId, 1)
+      }
+    }
+    // Then send the vote to the server
+    updateVote(itemId, votes[itemId] + (isUpvote ? 1 : -1));
+  };
   return (
     <div>
-      <Banner mobile={mobile} filters={filters} setFilters={setFilters} ratty={ratty} andrews={andrews} ivy={ivy} vdub={vdub} />
-      <WeekContainer
-        mobile={mobile}
-        currentDay={currentDay}
+      <Banner mobile={mobileStatus} filters={filters} setFilters={setFilters}
+        ratty={diningStatus.ratty} andrews={diningStatus.andrews} ivy={diningStatus.ivy} vdub={diningStatus.vdub} />
+      {!mobileStatus && <DesktopContainer
+        // menu item mechanism
         menuByDayAndHall={menuByDayAndHall}
         meal={meal}
         capitalizeFirstLetter={capitalizeFirstLetter}
+        // images
+        upArrow={upArrow}
+        downArrow={downArrow}
+        upvoted={upvoted}
+        votes={votes}
+        downvoted={downvoted}
+        // voting mechanism
+        handleVote={handleVote}
+        clicked={clicked} />}
+      
+      {mobileStatus && <MobileContainer
+        // menu item mechanism
+        currentDay={currentDay}
+        meal={meal}
+        capitalizeFirstLetter={capitalizeFirstLetter}
         todayMenu={todayMenu}
-        upvote={upvote}
-        downvote={downvote}
-        handleUpvote={handleUpvote}
-        handleDownvote={handleDownvote}
-        voteStatus={voteStatus}
-        votes={votes} />
+        // images
+        upArrow={upArrow}
+        downArrow={downArrow}
+        upvoted={upvoted}
+        votes={votes}
+        downvoted={downvoted}
+        // voting mechanism
+        handleVote={handleVote}
+        clicked={clicked} />}
       <div className='disclaimer'>
         <p>**Updates every Monday morning**</p>
         <p>Breakfast: before 11:00 am</p>
