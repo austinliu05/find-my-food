@@ -8,5 +8,5 @@ onto EC2 server instance using Node.js.
 # Future Ideas
 
 - Revamping UI and making web application look better.
-- 
+  
 - Plan on developing into an IOS app available on the App Store
