@@ -105,37 +105,26 @@ function App() {
       ...prevVotes,
       [itemId]: prevVotes[itemId] + delta,
     }));
+    updateVote(itemId, votes[itemId] + delta);
   }
   // Function to handle voting
   const handleVote = (itemId, isUpvote) => {
-    // 
+    // if first time voting
     if (!clicked[itemId]) {
+      setClicked((prev) => ({ ...prev, [itemId]: (isUpvote ? "upvoted" : "downvoted") }));
       setVotes(prevVotes => ({
         ...prevVotes,
         [itemId]: prevVotes[itemId] + (isUpvote ? 1 : -1),
       }));
-    } else if (clicked[itemId] === "upvoted" && !isUpvote) {
+      // Then send the vote to the server
+      updateVote(itemId, votes[itemId] + (isUpvote ? 1 : -1));
+    } else if (clicked[itemId] === "upvoted" && !isUpvote) { // upvote has already been clicked
+      setClicked((prev) => ({ ...prev, [itemId]: "" }));
       changeVote(itemId, -1)
-    } else if (clicked[itemId] === "downvoted" && isUpvote) {
+    } else if (clicked[itemId] === "downvoted" && isUpvote) { // unclicking downvote
+      setClicked((prev) => ({ ...prev, [itemId]: "" }));
       changeVote(itemId, 1)
     }
-    if (isUpvote) {
-      if (!clicked[itemId]) {
-        setClicked((prev) => ({ ...prev, [itemId]: "upvoted" }));
-      } else {
-        setClicked((prev) => ({ ...prev, [itemId]: "" }));
-        changeVote(itemId, -1)
-      }
-    } else {
-      if (!clicked[itemId]) {
-        setClicked((prev) => ({ ...prev, [itemId]: "downvoted" }));
-      } else {
-        setClicked((prev) => ({ ...prev, [itemId]: "" }));
-        changeVote(itemId, 1)
-      }
-    }
-    // Then send the vote to the server
-    updateVote(itemId, votes[itemId] + (isUpvote ? 1 : -1));
   };
   return (
     <div>
@@ -155,7 +144,7 @@ function App() {
         // voting mechanism
         handleVote={handleVote}
         clicked={clicked} />}
-      
+
       {mobileStatus && <MobileContainer
         // menu item mechanism
         currentDay={currentDay}

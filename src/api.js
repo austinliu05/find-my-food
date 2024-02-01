@@ -1,4 +1,5 @@
 export const updateVote = async (itemId, votes) => {
+  console.log(votes)
   // http://127.0.0.1:5000/menu-items
   // https://apoxie.pythonanywhere.com/menu-items
   fetch("https://apoxie.pythonanywhere.com/menu-items", {
