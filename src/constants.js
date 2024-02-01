@@ -1,7 +1,7 @@
 // Constants.js
 
 // Dining hall operating hours
-export const rattyHours = { start: 0, end: 19.5 }; // 7:30 AM to 7:30 PM
+export const rattyHours = { start: 7.5, end: 19.5 }; // 7:30 AM to 7:30 PM
 export const andrewsHours = { start: 11, end: 20 }; // 11 AM to 8 PM
 export const vdubHours = { start: 7.5, end: 20.5 }; // 7:30 AM to 8:30 PM
 
