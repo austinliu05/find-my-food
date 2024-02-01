@@ -18,11 +18,6 @@ function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
   // if the dining hall button is clicked
   const handleDiningClick = (hallName, isOpen) => {
     console.log(`${hallName} Open:`, isOpen);
-    // check if its open
-    if (!isOpen) {
-      alert(`The ${hallName} is currently closed.`);
-      return;
-    }
     // only filter for the corresponding dining hall
     if (hallName === "Ratty") {
       setFilters(prevFilters => ({
