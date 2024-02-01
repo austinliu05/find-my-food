@@ -121,7 +121,7 @@ function App() {
     } else if (clicked[itemId] === "upvoted" && !isUpvote) { // upvote has already been clicked
       setClicked((prev) => ({ ...prev, [itemId]: "" }));
       changeVote(itemId, -1)
-    } else if (clicked[itemId] === "downvoted" && isUpvote) { // unclicking downvote
+    } else if (clicked[itemId] === "downvoted" && isUpvote) { // downvote has already been clicked
       setClicked((prev) => ({ ...prev, [itemId]: "" }));
       changeVote(itemId, 1)
     }
