@@ -106,7 +106,7 @@ function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
             </label>
           </div>
           <div className="hall">
-            <div className="legend-color legend-green"></div>
+            <div className="legend-color legend-orange"></div>
             <span className="legend-text">- Ivy Room</span>
             <label>
               <input
@@ -142,7 +142,7 @@ function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
             </label>
           </div>
           <div className="hall">
-            <div className="legend-color legend-yellow"></div>
+            <div className="legend-color legend-purple"></div>
             <span className="legend-text">- VDub</span>
             <label>
               <input
