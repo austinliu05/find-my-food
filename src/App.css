@@ -28,10 +28,7 @@ body {
 .week-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   margin-top: 5px;
-  margin-left: 3%;
-  margin-right: 3%;
 }
 
 .col {
@@ -65,7 +62,7 @@ body {
 }
 .category h4{
   padding: 0;
-  margin: 5px;
+  margin: 3px;
 }
 .category p{
   padding: 0;
