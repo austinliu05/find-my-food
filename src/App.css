@@ -35,7 +35,7 @@ body {
 }
 
 .col {
-  flex: 1 1 10%;
+  flex: 10%;
   /* Adjust the width as per your design */
   border: 1px solid #ddd;
   margin: 10px;
@@ -78,10 +78,10 @@ body {
   background-color: #7291ff;
 }
 .IvyRoom .category{
-  background-color: #27a600;
+  background-color: #ffd28e;
 }
 .VDub .category{
-  background-color: #9e00ee;
+  background-color: #e0a1ff;
 }
 
 .legend {
@@ -222,15 +222,10 @@ body {
   }
 
   .dining-btn:active {
-    color: white;
+    color: rgb(0, 0, 0);
+    background-color: #535353;
     box-shadow: 0 0.2rem #dfd9d9;
     transform: translateY(0.2rem);
-  }
-
-  .dining-btn:hover:not(:disabled) {
-    background: #b2b2b2;
-    color: rgb(13, 12, 12);
-    text-shadow: 0 0.1rem #bcb4b4;
   }
 
   .dining-btn:disabled {
