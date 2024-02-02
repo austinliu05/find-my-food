@@ -1,8 +1,8 @@
 export const updateVote = async (itemId, votes) => {
   console.log(votes)
   // http://127.0.0.1:5000/menu-items
-  // https://apoxie.pythonanywhere.com/menu-items
-  fetch("https://apoxie.pythonanywhere.com/menu-items", {
+  //https://findmyfood.pythonanywhere.com/menu-items
+  fetch("https://findmyfood.pythonanywhere.com/menu-items", {
     method: "POST",
     cache: "no-store",
     headers: {
@@ -19,9 +19,10 @@ export const updateVote = async (itemId, votes) => {
     });
 }
 export const fetchMenuItems = async (halls, meal) => {
+  console.log("fetching")
   // http://127.0.0.1:5000/menu-items
-  // https://apoxie.pythonanywhere.com/menu-items
-  const response = await fetch("https://apoxie.pythonanywhere.com/menu-items", {
+  // https://findmyfood.pythonanywhere.com/menu-items
+  const response = await fetch("https://findmyfood.pythonanywhere.com/menu-items", {
     method: "POST",
     cache: "no-store",
     headers: {
