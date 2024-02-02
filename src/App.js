@@ -55,6 +55,7 @@ function App() {
   const [votes, setVotes] = useState([]);
   // sorting the given json file into readable code for front end to easily parse and display
   function sortMeals(items) {
+    console.log(items)
     const sortedMeals = {
       Sunday: {},
       Monday: {},

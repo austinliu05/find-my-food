@@ -69,23 +69,30 @@ function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
       <div className='banner'>
         <img className="logo" src={getPicture()} alt=''></img>
         {mobile &&
+          /* Changing from div to table*/
+          // <table className='dining-btns'>
+
+          // </table>
+
           <div className='dining-btns'>
             <button className="dining-btn" disabled={!ratty} onClick={() => handleDiningClick('Ratty', ratty)}>Ratty
               {!ratty && <p className='closed'>Closed</p>}
               {ratty && <p className='open'>Open</p>}
             </button>
             <button className="dining-btn" disabled={!andrews} onClick={() => handleDiningClick('Andrews', andrews)}>Andrews
-            {!andrews && <p className='closed'>Closed</p>}
-            {andrews && <p className='open'>Open</p>}
+              {!andrews && <p className='closed'>Closed</p>}
+              {andrews && <p className='open'>Open</p>}
             </button>
             <button className="dining-btn" disabled={!ivy} onClick={() => handleDiningClick('IvyRoom', ivy)}>Ivy Room
-            {!ivy && <p className='closed'>Closed</p>}
-            {ivy && <p className='open'>Open</p>}</button>
+              {!ivy && <p className='closed'>Closed</p>}
+              {ivy && <p className='open'>Open</p>}</button>
             <button className="dining-btn" disabled={!vdub} onClick={() => handleDiningClick('VDub', vdub)}>VDub
-            {!vdub && <p className='closed'>Closed</p>}
-            {vdub && <p className='open'>Open</p>}
+              {!vdub && <p className='closed'>Closed</p>}
+              {vdub && <p className='open'>Open</p>}
             </button>
-          </div>}
+          </div>
+
+        }
         <div className='legend'>
           <div className="hall">
             <div className="legend-color legend-red"></div>
