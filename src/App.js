@@ -130,48 +130,49 @@ function App() {
   };
   return (
     <div>
-      <Banner mobile={mobileStatus} filters={filters} setFilters={setFilters}
-        ratty={diningStatus.ratty} andrews={diningStatus.andrews} ivy={diningStatus.ivy} vdub={diningStatus.vdub} />
-      {!mobileStatus && <DesktopContainer
-        // menu item mechanism
-        menuByDayAndHall={menuByDayAndHall}
-        meal={meal}
-        capitalizeFirstLetter={capitalizeFirstLetter}
-        // images
-        upArrow={upArrow}
-        downArrow={downArrow}
-        upvoted={upvoted}
-        votes={votes}
-        downvoted={downvoted}
-        // voting mechanism
-        handleVote={handleVote}
-        clicked={clicked} />}
+      <div className='page-container'>
+        <Banner mobile={mobileStatus} filters={filters} setFilters={setFilters}
+          ratty={diningStatus.ratty} andrews={diningStatus.andrews} ivy={diningStatus.ivy} vdub={diningStatus.vdub} />
+        {!mobileStatus && <DesktopContainer
+          // menu item mechanism
+          menuByDayAndHall={menuByDayAndHall}
+          meal={meal}
+          capitalizeFirstLetter={capitalizeFirstLetter}
+          // images
+          upArrow={upArrow}
+          downArrow={downArrow}
+          upvoted={upvoted}
+          votes={votes}
+          downvoted={downvoted}
+          // voting mechanism
+          handleVote={handleVote}
+          clicked={clicked} />}
 
-      {mobileStatus && <MobileContainer
-        // menu item mechanism
-        currentDay={currentDay}
-        meal={meal}
-        capitalizeFirstLetter={capitalizeFirstLetter}
-        todayMenu={todayMenu}
-        // images
-        upArrow={upArrow}
-        downArrow={downArrow}
-        upvoted={upvoted}
-        votes={votes}
-        downvoted={downvoted}
-        // voting mechanism
-        handleVote={handleVote}
-        clicked={clicked} />}
-      <div className='disclaimer'>
-        <p>**Updates every Monday morning**</p>
-        <p>Breakfast: before 11:00 am</p>
-        <p>Lunch: 11:00am - 4:00 pm</p>
-        <p>Diner: after 4:00pm</p>
+        {mobileStatus && <MobileContainer
+          // menu item mechanism
+          currentDay={currentDay}
+          meal={meal}
+          capitalizeFirstLetter={capitalizeFirstLetter}
+          todayMenu={todayMenu}
+          // images
+          upArrow={upArrow}
+          downArrow={downArrow}
+          upvoted={upvoted}
+          votes={votes}
+          downvoted={downvoted}
+          // voting mechanism
+          handleVote={handleVote}
+          clicked={clicked} />}
+        <div className='disclaimer'>
+          <p>**Updates every Monday morning**</p>
+          <p>Breakfast: before 11:00 am</p>
+          <p>Lunch: 11:00am - 4:00 pm</p>
+          <p>Diner: after 4:00pm</p>
+        </div>
       </div>
       <footer>
         <p>© 2024 Austin Liu. All Rights Reserved.</p>
       </footer>
-
     </div>
   );
 }
