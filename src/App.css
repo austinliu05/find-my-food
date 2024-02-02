@@ -142,10 +142,10 @@ footer {
   padding: 20px;
   background-color: #333;
   color: white;
-  position: absolute;
   bottom: 0;
   width: 100%;
   box-sizing: border-box;
+  margin-top: 5%;
 }
 
 /* Additional responsive adjustments */
