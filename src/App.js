@@ -168,6 +168,10 @@ function App() {
         <p>Lunch: 11:00am - 4:00 pm</p>
         <p>Diner: after 4:00pm</p>
       </div>
+      <footer>
+        <p>© 2024 Austin Liu. All Rights Reserved.</p>
+      </footer>
+
     </div>
   );
 }

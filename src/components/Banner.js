@@ -1,6 +1,6 @@
 import logo from '../assets/brown.png'
 import header from '../assets/BrownHeader.png'
-import '../App.css';
+import './Banner.css';
 
 function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
   // changes the logo based on the screen size
@@ -89,23 +89,7 @@ function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
         <div className='legend'>
           <div className="hall">
             <div className="legend-color legend-red"></div>
-            <span>- Ratty</span>
-          </div>
-          <div className="hall">
-            <div className="legend-color legend-green"></div>
-            <span>- Ivy Room</span>
-          </div>
-          <div className="hall">
-            <div className="legend-color legend-blue"></div>
-            <span>- Andrews</span>
-          </div>
-          <div className="hall">
-            <div className="legend-color legend-yellow"></div>
-            <span>- VDub</span>
-          </div>
-        </div>
-        <div className='filtering'>
-          <form>
+            <span className="legend-text">- Ratty</span>
             <label>
               <input
                 type="checkbox"
@@ -119,23 +103,11 @@ function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
                   handleDiningCheck('Ratty', ratty); //else, run the function and update the status
                 }}
               />
-              Ratty
             </label>
-            <label>
-              <input
-                type="checkbox"
-                checked={filters.Andrews}
-                onChange={e => {
-                  if (!andrews) {
-                    e.preventDefault();
-                    alert('The Andrews is currently closed.');
-                    return;
-                  }
-                  handleDiningCheck('Andrews', andrews);
-                }}
-              />
-              Andrews
-            </label>
+          </div>
+          <div className="hall">
+            <div className="legend-color legend-green"></div>
+            <span className="legend-text">- Ivy Room</span>
             <label>
               <input
                 type="checkbox"
@@ -149,8 +121,29 @@ function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
                   handleDiningCheck('IvyRoom', ivy);
                 }}
               />
-              IvyRoom
             </label>
+          </div>
+          <div className="hall">
+            <div className="legend-color legend-blue"></div>
+            <span className="legend-text">- Andrews</span>
+            <label>
+              <input
+                type="checkbox"
+                checked={filters.Andrews}
+                onChange={e => {
+                  if (!andrews) {
+                    e.preventDefault();
+                    alert('The Andrews is currently closed.');
+                    return;
+                  }
+                  handleDiningCheck('Andrews', andrews);
+                }}
+              />
+            </label>
+          </div>
+          <div className="hall">
+            <div className="legend-color legend-yellow"></div>
+            <span className="legend-text">- VDub</span>
             <label>
               <input
                 type="checkbox"
@@ -164,10 +157,9 @@ function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
                   handleDiningCheck('VDub', vdub);
                 }}
               />
-              VDub
             </label>
-            <button className="clear" onClick={clearFilters}>Clear Filters</button>
-          </form>
+          </div>
+          <button className="clear" onClick={clearFilters}>Clear Filters</button>
         </div>
       </div>
     </div>

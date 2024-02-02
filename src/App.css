@@ -1,20 +1,18 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background-color: #4E3629;
 }
-
-.banner {
-  display: flex;
-  width: 80%;
-  margin-top: 20px;
-}
-
 .meal-info {
   text-align: center;
 }
 
 .logo {
   display: flex;
-  width: 30%;
+  width: 40%;
   margin-top: 20px;
   margin-left: 2%;
 }
@@ -27,15 +25,18 @@ body {
 
 .week-container {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  /* Prevent columns from wrapping */
   margin-top: 5px;
+  overflow-x: auto;
+  /* Add horizontal scrolling if columns overflow */
 }
 
 .col {
-  flex: 10%;
-  /* Adjust the width as per your design */
+  flex: 1;
   border: 1px solid #ddd;
   margin: 10px;
+  min-width: 120px;
   padding: 15px;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
@@ -51,81 +52,41 @@ body {
 .col .IvyRoom,
 .col .Andrews,
 .col .VDub {
-  margin-top: 10px;
-  padding: 2px 8px;
+  margin-top: 10%;
   border-radius: 10px;
 }
-.category{
+
+.category {
   border-radius: 8px;
   padding: 10px;
-  margin-bottom: 10px; /* Space between categories */
+  margin-bottom: 15px;
+  /* Space between categories */
 }
-.category h4{
+
+.category h4 {
   padding: 0;
   margin: 3px;
 }
-.category p{
+
+.category p {
   padding: 0;
   margin: 7px;
 }
-.Ratty .category{
+
+.Ratty .category {
   background-color: #ff8383;
 }
-.Andrews .category{
+
+.Andrews .category {
   background-color: #7291ff;
 }
-.IvyRoom .category{
+
+.IvyRoom .category {
   background-color: #ffd28e;
 }
-.VDub .category{
+
+.VDub .category {
   background-color: #e0a1ff;
-}
-
-.legend {
-  border-radius: 10px;
-  background-color: #b6b6b6;
-  padding: 10px;
-  margin-right: 10%;
-  margin-top: 3vh;
-  height: 10%
-}
-
-.hall {
-  display: flex;
-  margin-top: 10%;
-}
-
-.legend-color {
-  width: 50px;
-  height: 20px;
-  border-radius: 10%;
-  margin-right: 5px;
-}
-
-/* Define colors */
-.legend-red {
-  background-color: #ff8383;
-}
-
-.legend-green {
-  background-color: #93ff72;
-}
-
-.legend-blue {
-  background-color: #7291ff;
-}
-
-.legend-yellow {
-  background-color: #d072ff;
-}
-
-.filtering {
-  background-color: #b6b6b6;
-  height: fit-content;
-  padding: 8px;
-  border-radius: 10px;
-  margin-top: 5%;
-  width: 50vh;
 }
 
 .disclaimer {
@@ -139,36 +100,54 @@ body {
 
 .disclaimer p {
   padding-left: 15px;
-  padding-right: 15px;
+  padding-right: 15prgb(144, 139, 133)
 }
 
-.clear {
-  margin-left: 10px;
-}
 .item-container {
   display: flex;
-  align-items: center; /* This will vertically center align the items */
-  justify-content: space-between; /* This will place the content on either end; adjust as needed */
-}  
+  align-items: center;
+  /* This will vertically center align the items */
+  justify-content: space-between;
+  /* This will place the content on either end; adjust as needed */
+}
+
 .item-container p {
-  margin-right: 10px; /* Adds some space between the item name and the vote buttons */
-  flex: 1; /* Allows the paragraph to take up as much space as it can, pushing the vote section to the end */
+  font-size: small;
+  margin-right: 10px;
+  /* Adds some space between the item name and the vote buttons */
+  flex: 1;
+  /* Allows the paragraph to take up as much space as it can, pushing the vote section to the end */
 }
 
 .vote {
-  display: flex; /* Aligns the vote buttons in a row */
-  align-items: center; /* Vertically centers the vote buttons */
+  display: flex;
+  /* Aligns the vote buttons in a row */
+  align-items: center;
+  /* Vertically centers the vote buttons */
 }
 
 .vote img {
-  width: auto; 
-  height: 1em; /* Sets the height of the arrow images relative to the font size */
-  margin: 0 5px; /* Adds space between the arrows */
+  width: auto;
+  height: 1em;
+  /* Sets the height of the arrow images relative to the font size */
+  margin: 0 5px;
+  /* Adds space between the arrows */
 }
 
 .vote p {
-  margin: 0; 
+  margin: 0;
 }
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #333;
+  color: white;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 /* Additional responsive adjustments */
 @media (max-width: 768px) {
   .col {
@@ -183,14 +162,6 @@ body {
     /* Full width on very small screens */
   }
 
-  .legend {
-    display: none;
-  }
-
-  .filtering {
-    display: none;
-  }
-
   .disclaimer {
     width: 70%;
     background-color: #f9c87a;
@@ -198,36 +169,6 @@ body {
     border-radius: 10px;
     margin-left: auto;
     margin-right: auto;
-  }
-
-  .dining-btns {
-    margin-top: 5vh;
-    margin-left: 6vh;
-  }
-
-  .dining-btn {
-    background-color: #eee;
-    border: none;
-    padding: 1rem;
-    font-size: 1rem;
-    width: 10em;
-    border-radius: 1rem;
-    color: rgb(13, 12, 12);
-    box-shadow: 0 0.4rem #dfd9d9;
-    cursor: pointer;
-    margin-bottom: 20px;
-  }
-
-  .dining-btn:active {
-    color: rgb(0, 0, 0);
-    background-color: #535353;
-    box-shadow: 0 0.2rem #dfd9d9;
-    transform: translateY(0.2rem);
-  }
-
-  .dining-btn:disabled {
-    cursor: auto;
-    color: rgb(13, 12, 12);
   }
 
   .meal-info {
@@ -245,39 +186,52 @@ body {
     width: 40%;
     height: 20vh;
   }
+
   .dining-btn p {
     padding: 0;
     margin: 0;
     font-size: small;
   }
+
   .closed {
     color: #c30000;
   }
+
   .open {
     color: #1b9003;
   }
+
   .item-container {
     display: flex;
-    align-items: center; /* This will vertically center align the items */
-    justify-content: space-between; /* This will place the content on either end; adjust as needed */
-  }  
+    align-items: center;
+    /* This will vertically center align the items */
+    justify-content: space-between;
+    /* This will place the content on either end; adjust as needed */
+  }
+
   .item-container p {
-    margin-right: 10px; /* Adds some space between the item name and the vote buttons */
-    flex: 1; /* Allows the paragraph to take up as much space as it can, pushing the vote section to the end */
+    margin-right: 10px;
+    /* Adds some space between the item name and the vote buttons */
+    flex: 1;
+    /* Allows the paragraph to take up as much space as it can, pushing the vote section to the end */
   }
-  
+
   .vote {
-    display: flex; /* Aligns the vote buttons in a row */
-    align-items: center; /* Vertically centers the vote buttons */
+    display: flex;
+    /* Aligns the vote buttons in a row */
+    align-items: center;
+    /* Vertically centers the vote buttons */
   }
-  
+
   .vote img {
-    width: auto; 
-    height: 1em; /* Sets the height of the arrow images relative to the font size */
-    margin: 0 5px; /* Adds space between the arrows */
+    width: auto;
+    height: 1em;
+    /* Sets the height of the arrow images relative to the font size */
+    margin: 0 5px;
+    /* Adds space between the arrows */
   }
-  
+
   .vote p {
-    margin: 0; 
+    margin: 0;
   }
 }
