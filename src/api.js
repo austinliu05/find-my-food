@@ -1,7 +1,7 @@
 export const updateVote = async (itemId, votes) => {
   console.log(votes)
   // http://127.0.0.1:5000/menu-items
-  //https://findmyfood.pythonanywhere.com/menu-items
+  // https://findmyfood.pythonanywhere.com/menu-items
   fetch("https://findmyfood.pythonanywhere.com/menu-items", {
     method: "POST",
     cache: "no-store",
