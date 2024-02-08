@@ -17,7 +17,7 @@ test('updateVote sends correct data', async () => {
   // checking fetch is called one
   expect(fetchMock.mock.calls.length).toEqual(1);
   // checking if the URL is being called to the right place
-  expect(fetchMock.mock.calls[0][0]).toEqual('http://127.0.0.1:5000/menu-items');
+  expect(fetchMock.mock.calls[0][0]).toEqual('https://findmyfood.pythonanywhere.com/menu-items');
   // checking if the request configuration matches what is expected
   expect(fetchMock.mock.calls[0][1]).toEqual({
     method: "POST",
@@ -39,7 +39,7 @@ test('fetchMenuItems fetches data correctly', async () => {
   const result = await fetchMenuItems(['TestHall'], 'lunch');
 
   expect(fetchMock.mock.calls.length).toEqual(1);
-  expect(fetchMock.mock.calls[0][0]).toEqual('http://127.0.0.1:5000/menu-items');
+  expect(fetchMock.mock.calls[0][0]).toEqual('https://findmyfood.pythonanywhere.com/menu-items');
   expect(fetchMock.mock.calls[0][1]).toEqual({
     method: "POST",
     cache: "no-store",
