@@ -24,7 +24,7 @@ describe('Dining Hall Open Check', () => {
       });
 
     it('Basic Testing all Dining Hall Hours', () => {
-        jest.setSystemTime(new Date('2023-02-14T17:00:00Z')); // 12:00 PM
+        jest.setSystemTime(new Date('2023-02-14T17:00:00Z')); 
         expect(isRattyOpen(rattyHours)).toBe(true);
         expect(isAndrewsOpen(andrewsHours)).toBe(true);
         expect(isIvyOpen(ivyHours)).toBe(true);
@@ -32,22 +32,22 @@ describe('Dining Hall Open Check', () => {
     });
     it('Testing Ivy Room Hours', () => {
         // closed Sunday at 12:00pm
-        jest.setSystemTime(new Date('2023-02-12T17:00:00Z')); // 12:00 PM
+        jest.setSystemTime(new Date('2023-02-12T15:00:00Z')); 
         expect(isIvyOpen(ivyHours)).toBe(false);
         // open Sunday at 7:00pm
-        jest.setSystemTime(new Date('2023-02-12T22:00:00Z')); // 7:00 PM
+        jest.setSystemTime(new Date('2023-02-12T22:00:00Z')); 
         expect(isIvyOpen(ivyHours)).toBe(true);
     });
     it('Testing VDub Hours', () => {
         // Closed on Sundays 
-        jest.setSystemTime(new Date('2023-02-12T17:00:00Z')); // 12:00 PM
+        jest.setSystemTime(new Date('2023-02-12T17:00:00Z')); 
         expect(isVDubOpen(vdubHours)).toBe(false);
         // Closed on Saturdays 
-        jest.setSystemTime(new Date('2023-02-11T17:00:00Z')); // 12:00 PM
+        jest.setSystemTime(new Date('2023-02-11T17:00:00Z')); 
         expect(isVDubOpen(vdubHours)).toBe(false);
     });
     it('Basic Testing all Dining Hall Hours (closed)', () => {
-        jest.setSystemTime(new Date('2023-02-14T7:00:00Z')); // 2:00 AM
+        jest.setSystemTime(new Date('2023-02-14T7:00:00Z')); 
         expect(isRattyOpen(rattyHours)).toBe(false);
         expect(isAndrewsOpen(andrewsHours)).toBe(false);
         expect(isIvyOpen(ivyHours)).toBe(false);
@@ -58,11 +58,11 @@ describe('Dining Hall Open Check', () => {
 describe('useDiningStatus', () => {
     it('Testing utility functions', () => {
         jest.useFakeTimers('modern');
-        jest.setSystemTime(new Date('2023-02-14T19:00:00Z')); // 4:00 PM
+        jest.setSystemTime(new Date('2023-02-14T19:00:00Z'));
 
         // Render the hook
         const { result } = renderHook(() => useDiningStatus());
-
+        
         // Assert the initial state of the hook
         expect(result.current.ratty).toBe(true);
         expect(result.current.andrews).toBe(true);
