@@ -31,8 +31,11 @@ describe('Dining Hall Open Check', () => {
         expect(isVDubOpen(vdubHours)).toBe(true);
     });
     it('Testing Ivy Room Hours', () => {
+        console.log('Current time:', new Date().toISOString());
+console.log('Ivy hours:', ivyHours);
+
         // closed Sunday at 12:00pm
-        jest.setSystemTime(new Date('2023-02-12T15:00:00Z')); 
+        jest.setSystemTime(new Date('2023-02-12T17:00:00Z')); 
         expect(isIvyOpen(ivyHours)).toBe(false);
         // open Sunday at 7:00pm
         jest.setSystemTime(new Date('2023-02-12T22:00:00Z')); 
