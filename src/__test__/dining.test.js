@@ -18,13 +18,10 @@ jest.mock('../utils', () => {
   });
 
 describe('Dining Hall Open Check', () => {
-    beforeAll(() => {
+    beforeEach(() => {
         jest.useFakeTimers('modern');
-    });
-
-    afterAll(() => {
-        jest.useRealTimers();
-    });
+        jest.resetAllMocks();
+      });
 
     it('Basic Testing all Dining Hall Hours', () => {
         jest.setSystemTime(new Date('2023-02-14T17:00:00Z')); // 12:00 PM
