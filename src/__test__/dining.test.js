@@ -19,8 +19,8 @@ jest.mock('../utils', () => {
 
 describe('Dining Hall Open Check', () => {
     beforeEach(() => {
+        process.env.TZ = 'UTC';
         jest.useFakeTimers('modern');
-        jest.resetAllMocks();
       });
 
     it('Basic Testing all Dining Hall Hours', () => {
