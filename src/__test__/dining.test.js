@@ -19,7 +19,6 @@ jest.mock('../utils', () => {
 
 describe('Dining Hall Open Check', () => {
     beforeEach(() => {
-        process.env.TZ = 'UTC';
         jest.useFakeTimers('modern');
       });
 

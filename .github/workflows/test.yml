@@ -16,4 +16,9 @@ jobs:
         with:
           node-version: "18.17.1"
       - run: npm install --legacy-peer-deps
+      - name: Run a command with a specific time zone
+        env:
+          TZ: 'America/New_York'
+        run: |
+          echo "The current time is $(date)"
       - run: npm test
