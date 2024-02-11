@@ -20,6 +20,7 @@ export function isIvyOpen(hours) {
   const now = new Date();
   const currentHour = now.getHours() + now.getMinutes() / 60;
   const dayOfWeek = now.getDay(); // Sunday - 0, Monday - 1, ..., Saturday - 6
+  console.log(currentHour);
   // Closed all day on Saturdays
   if (dayOfWeek === 6) return false;
 
