@@ -20,11 +20,13 @@ function DesktopContainer({ menuByDayAndHall, meal, capitalizeFirstLetter,
                                                 <p>{item.name}</p>
                                                 <div className="vote">
                                                     <img
+                                                        alt="upvote"
                                                         src={clicked[item.id] === "upvoted" ? upvoted : upArrow}
                                                         onClick={() => handleVote(item.id, true)}
                                                     />
                                                     <p>{votes[item.id]}</p>
                                                     <img
+                                                        alt="downvote"
                                                         src={clicked[item.id] === "downvoted" ? downvoted : downArrow}
                                                         onClick={() => handleVote(item.id, false)}
                                                     />
