@@ -55,6 +55,9 @@ function App() {
   const [votes, setVotes] = useState([]);
   // sorting the given json file into readable code for front end to easily parse and display
   function sortMeals(items) {
+
+    // items is in json format
+
     console.log(items)
     const sortedMeals = {
       Sunday: {},
@@ -70,6 +73,8 @@ function App() {
       const day = item.day;
       const hall = item.hall;
       const category = item.category
+
+      // Access item.votes ==>
 
       // Ensure the 'day' object is initialized
       if (!sortedMeals[day]) {
@@ -88,11 +93,39 @@ function App() {
       sortedVotes[item.id] = item.votes
       // Push the item to the respective hall array
       sortedMeals[day][hall][category].push(item);
+
     });
+
+    // Sort all categories in all of the checked dining halls
+    const halls = Object.keys(filters).filter(hall => filters[hall]);
+    halls.forEach(diningHall => {
+      console.log(sortedMeals[currentDay][diningHall]);
+
+      Object.keys(sortedMeals[currentDay][diningHall]).forEach(categoryType => {
+        console.log(categoryType);
+        sortedMeals[currentDay][diningHall][categoryType] =
+          sortedMeals[currentDay][diningHall][categoryType].sort((item1, item2) => { return item2.votes - item1.votes });
+      });
+
+    });
+
     setVotes(sortedVotes);
     setMenuByDayAndHall(sortedMeals);
     console.log(sortedMeals)
   }
+
+  // Helper function for obtaining the average votes among a specific categories:
+  // Could change to keep track of votes while pushing items ==> changes from O(n) to O(1)
+  function getAverageVote(meals) {
+    let sum = 0;
+    let count = 0;
+    meals.forEach((element) => {
+      sum += element.votes;
+      count++;
+    })
+    return (sum / count);
+  }
+
   // fetching data from the server
   const update = () => {
     const halls = Object.keys(filters).filter(hall => filters[hall]);
@@ -167,7 +200,7 @@ function App() {
           <p>**Updates every Monday morning**</p>
           <p>Breakfast: before 11:00 am</p>
           <p>Lunch: 11:00am - 4:00 pm</p>
-          <p>Diner: after 4:00pm</p>
+          <p>Dinner: after 4:00pm</p>
         </div>
       </div>
       <footer>
