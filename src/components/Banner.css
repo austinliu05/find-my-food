@@ -2,6 +2,13 @@ body {
   background-color: #4E3629;
 }
 
+.closed {
+  color: #c30000;
+}
+.open {
+  color: #1b9003;
+}
+
 .banner {
   display: flex;
   width: 80%;
@@ -14,53 +21,39 @@ body {
   margin-top: 20px;
   margin-left: 2%;
 }
-
-.legend {
-  border-radius: 10px;
-  background-color: #b6b6b6;
-  padding: 10px;
-  margin-right: 10%;
-  margin-top: 3vh;
-  height: 10%
-}
-
-.hall {
+.dining-btns {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10%;
+  margin-top: 10vh;
+  margin-left: 8vh;
+}
+.dining-btn {
+  background-color: #eee;
+  border: none;
+  padding: 25px;
+  font-size: 1rem;
+  width: 9em;
+  height: 5em;
+  border-radius: 1rem;
+  color: rgb(13, 12, 12);
+  box-shadow: 0 0.4rem #dfd9d9;
+  cursor: pointer;
+  margin-bottom: 20px;
+  margin-right: 5vh;
+  line-height: 5px;
 }
 
-.legend-color {
-  width: 50px;
-  height: 20px;
-  border-radius: 10%;
-  margin-right: 5px;
+.dining-btn:active {
+  color: rgb(0, 0, 0);
+  background-color: #535353;
+  box-shadow: 0 0.2rem #dfd9d9;
+  transform: translateY(0.2rem);
 }
 
-.legend-text {
-  flex-grow: 1;
+.dining-btn:disabled {
+  cursor: auto;
+  color: rgb(13, 12, 12);
 }
 
-/* Define colors */
-.legend-red {
-  background-color: #ff8383;
-}
-
-.legend-orange {
-  background-color: #ffd28e;
-}
-
-.legend-blue {
-  background-color: #7291ff;
-}
-
-.legend-purple {
-  background-color: #e0a1ff;
-}
-.clear{
-  margin-top: 10%;
-}
 /* Additional responsive adjustments */
 @media (max-width: 768px) {
   .col {
@@ -74,14 +67,10 @@ body {
     flex: 1 1 100%;
     /* Full width on very small screens */
   }
-
-  .legend {
-    display: none;
-  }
-
   .dining-btns {
     margin-top: 5vh;
     margin-left: 8vh;
+    display: block;
   }
 
   .dining-btn {
@@ -95,24 +84,6 @@ body {
     box-shadow: 0 0.4rem #dfd9d9;
     cursor: pointer;
     margin-bottom: 20px;
-  }
-
-  .dining-btn:active {
-    color: rgb(0, 0, 0);
-    background-color: #535353;
-    box-shadow: 0 0.2rem #dfd9d9;
-    transform: translateY(0.2rem);
-  }
-
-  .dining-btn:disabled {
-    cursor: auto;
-    color: rgb(13, 12, 12);
-  }
-  .closed {
-    color: #c30000;
-  }
-
-  .open {
-    color: #1b9003;
+    line-height: normal;
   }
 }
