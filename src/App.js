@@ -99,7 +99,7 @@ function App() {
     // Sort all categories in all of the checked dining halls
     const halls = Object.keys(filters).filter(hall => filters[hall]);
     halls.forEach(diningHall => {
-      console.log(sortedMeals[currentDay][diningHall]);
+      //console.log(sortedMeals[currentDay][diningHall]);
 
       Object.keys(sortedMeals[currentDay][diningHall]).forEach(categoryType => {
         console.log(categoryType);
