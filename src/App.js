@@ -96,13 +96,10 @@ function App() {
 
     });
 
-    // Sort all categories in all of the checked dining halls
+    // Sort all categories in all of the checked dining halls (applies only to the CURRENT DAY)
     const halls = Object.keys(filters).filter(hall => filters[hall]);
     halls.forEach(diningHall => {
-      //console.log(sortedMeals[currentDay][diningHall]);
-
       Object.keys(sortedMeals[currentDay][diningHall]).forEach(categoryType => {
-        console.log(categoryType);
         sortedMeals[currentDay][diningHall][categoryType] =
           sortedMeals[currentDay][diningHall][categoryType].sort((item1, item2) => { return item2.votes - item1.votes });
       });
