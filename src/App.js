@@ -26,12 +26,7 @@ function App() {
   // checking if arrow is clicked
   const [clicked, setClicked] = useState(false);
   // Which dining halls are selected
-  const [filters, setFilters] = useState({
-    Ratty: false,
-    IvyRoom: false,
-    Andrews: false,
-    VDub: false
-  });
+  const [filters, setFilters] = useState({});
   // State to store the sorted menu items by day and hall
   const [menuByDayAndHall, setMenuByDayAndHall] = useState({
     Sunday: {},

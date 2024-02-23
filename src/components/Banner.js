@@ -7,14 +7,6 @@ function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
   function getPicture() {
     return mobile ? logo : header;
   }
-  function clearFilters() {
-    setFilters({
-      Ratty: false,
-      IvyRoom: false,
-      Andrews: false,
-      VDub: false
-    });
-  }
   // if the dining hall button is clicked
   const handleDiningClick = (hallName, isOpen) => {
     console.log(`${hallName} Open:`, isOpen);
@@ -51,18 +43,6 @@ function Banner({ mobile, filters, setFilters, ratty, andrews, ivy, vdub }) {
         VDub: !prevFilters.VDub
       }));
     }
-  };
-  // similar function but for the desktop view
-  const handleDiningCheck = (hallName, isOpen) => {
-    if (!isOpen) {
-      alert(`The ${hallName} is currently closed.`);
-      return;
-    }
-    // keeps all other filters the same
-    setFilters(prevFilters => ({
-      ...prevFilters,
-      [hallName]: !prevFilters[hallName], //only adjusts selected filter
-    }));
   };
   return (
     <div>
