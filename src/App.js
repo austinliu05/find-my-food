@@ -132,15 +132,15 @@ function App() {
         console.error("Error sending data:", error);
       });
   };
-    const handleSearchQuerySubmit = (query) => {
-      console.log("Searching for:", query);
-      // Assuming updateByName can accept a search query as parameter
-      updateByName(query);
+  const handleSearchQuerySubmit = (query) => {
+    console.log("Searching for:", query);
+    // Assuming updateByName can accept a search query as parameter
+    updateByName(query);
   };
   // fetching items from server
-  const updateByName = () => {
+  const updateByName = (name) => {
     const halls = Object.keys(filters).filter(hall => filters[hall]);
-    fetchByName(halls, meal)
+    fetchByName(halls, name, meal)
       .then(sortMeals) // After fetching, pass the data to sortMeals
       .catch(error => {
         console.error("Error sending data:", error);
