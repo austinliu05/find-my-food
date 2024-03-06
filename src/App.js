@@ -8,7 +8,7 @@ import Banner from './components/Banner'
 import DesktopContainer from './components/DesktopContainer'
 import MobileContainer from './components/MobileContainer'
 
-import { fetchMenuItems, updateVote } from './api';
+import { fetchByName, fetchMenuItems, updateVote } from './api';
 import upArrow from './assets/upArrow.png'
 import downArrow from './assets/downArrow.png'
 import upvoted from './assets/upvoted.png'
@@ -132,6 +132,20 @@ function App() {
         console.error("Error sending data:", error);
       });
   };
+    const handleSearchQuerySubmit = (query) => {
+      console.log("Searching for:", query);
+      // Assuming updateByName can accept a search query as parameter
+      updateByName(query);
+  };
+  // fetching items from server
+  const updateByName = () => {
+    const halls = Object.keys(filters).filter(hall => filters[hall]);
+    fetchByName(halls, meal)
+      .then(sortMeals) // After fetching, pass the data to sortMeals
+      .catch(error => {
+        console.error("Error sending data:", error);
+      });
+  };
   function changeVote(itemId, delta) {
     setVotes(prevVotes => ({
       ...prevVotes,
@@ -164,6 +178,7 @@ function App() {
         <Banner mobile={mobileStatus} filters={filters} setFilters={setFilters}
           ratty={diningStatus.ratty} andrews={diningStatus.andrews} ivy={diningStatus.ivy} vdub={diningStatus.vdub} />
         {!mobileStatus && <DesktopContainer
+          onSearchQuerySubmit={handleSearchQuerySubmit}
           // menu item mechanism
           menuByDayAndHall={menuByDayAndHall}
           meal={meal}

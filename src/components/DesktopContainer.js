@@ -1,8 +1,10 @@
 import '../App.css';
-function DesktopContainer({ menuByDayAndHall, meal, capitalizeFirstLetter,
+import SearchBar from './SearchBar';
+function DesktopContainer({ onSearchQuerySubmit, menuByDayAndHall, meal, capitalizeFirstLetter,
     upArrow, downArrow, upvoted, downvoted, votes, handleVote, clicked }) {
     return (
         <div>
+            <SearchBar onSearchQueryChange={onSearchQuerySubmit}/>
             <div className="week-container">
                 {Object.entries(menuByDayAndHall).map(([day, halls]) => (
                     <div className="col" key={day}> {/* Iterate over the data, converting into array of key and value pairs (day = key, hall = value) */}
