@@ -42,11 +42,13 @@ function App() {
     Friday: {},
     Saturday: {}
   });
+
   // communicating with the flask server
   useEffect(() => {
     update();
     // update is called when filters change
   }, [filters]);
+
 
   // gets the menu for the current day
   const todayMenu = menuByDayAndHall[currentDay]
@@ -103,7 +105,6 @@ function App() {
         sortedMeals[currentDay][diningHall][categoryType] =
           sortedMeals[currentDay][diningHall][categoryType].sort((item1, item2) => { return item2.votes - item1.votes });
       });
-
     });
 
     setVotes(sortedVotes);
@@ -113,15 +114,15 @@ function App() {
 
   // Helper function for obtaining the average votes among a specific categories:
   // Could change to keep track of votes while pushing items ==> changes from O(n) to O(1)
-  function getAverageVote(meals) {
-    let sum = 0;
-    let count = 0;
-    meals.forEach((element) => {
-      sum += element.votes;
-      count++;
-    })
-    return (sum / count);
-  }
+  // function getAverageVote(meals) {
+  //   let sum = 0;
+  //   let count = 0;
+  //   meals.forEach((element) => {
+  //     sum += element.votes;
+  //     count++;
+  //   })
+  //   return (sum / count);
+  // }
 
   // fetching data from the server
   const update = () => {
