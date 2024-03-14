@@ -8,7 +8,7 @@ import Banner from './components/Banner'
 import DesktopContainer from './components/DesktopContainer'
 import MobileContainer from './components/MobileContainer'
 
-import { fetchMenuItems, updateVote } from './api';
+import { fetchByName, fetchMenuItems, updateVote } from './api';
 import upArrow from './assets/upArrow.png'
 import downArrow from './assets/downArrow.png'
 import upvoted from './assets/upvoted.png'
@@ -47,11 +47,13 @@ function App() {
     Friday: {},
     Saturday: {}
   });
+
   // communicating with the flask server
   useEffect(() => {
     update();
     // update is called when filters change
   }, [filters]);
+
 
   // gets the menu for the current day
   const todayMenu = menuByDayAndHall[currentDay]
@@ -108,7 +110,6 @@ function App() {
         sortedMeals[currentDay][diningHall][categoryType] =
           sortedMeals[currentDay][diningHall][categoryType].sort((item1, item2) => { return item2.votes - item1.votes });
       });
-
     });
 
     setVotes(sortedVotes);
@@ -118,20 +119,34 @@ function App() {
 
   // Helper function for obtaining the average votes among a specific categories:
   // Could change to keep track of votes while pushing items ==> changes from O(n) to O(1)
-  function getAverageVote(meals) {
-    let sum = 0;
-    let count = 0;
-    meals.forEach((element) => {
-      sum += element.votes;
-      count++;
-    })
-    return (sum / count);
-  }
+  // function getAverageVote(meals) {
+  //   let sum = 0;
+  //   let count = 0;
+  //   meals.forEach((element) => {
+  //     sum += element.votes;
+  //     count++;
+  //   })
+  //   return (sum / count);
+  // }
 
   // fetching data from the server
   const update = () => {
     const halls = Object.keys(filters).filter(hall => filters[hall]);
     fetchMenuItems(halls, meal)
+      .then(sortMeals) // After fetching, pass the data to sortMeals
+      .catch(error => {
+        console.error("Error sending data:", error);
+      });
+  };
+  const handleSearchQuerySubmit = (query) => {
+    console.log("Searching for:", query);
+    // Assuming updateByName can accept a search query as parameter
+    updateByName(query);
+  };
+  // fetching items from server
+  const updateByName = (name) => {
+    const halls = Object.keys(filters).filter(hall => filters[hall]);
+    fetchByName(halls, name, meal)
       .then(sortMeals) // After fetching, pass the data to sortMeals
       .catch(error => {
         console.error("Error sending data:", error);
@@ -169,6 +184,7 @@ function App() {
         <Banner mobile={mobileStatus} filters={filters} setFilters={setFilters}
           ratty={diningStatus.ratty} andrews={diningStatus.andrews} ivy={diningStatus.ivy} vdub={diningStatus.vdub} />
         {!mobileStatus && <DesktopContainer
+          onSearchQuerySubmit={handleSearchQuerySubmit}
           // menu item mechanism
           menuByDayAndHall={menuByDayAndHall}
           meal={meal}
