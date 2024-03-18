@@ -17,12 +17,12 @@ function SearchBar({ onSearchQueryChange }) {
     };
     return (
         <div className="search-bar">
-            <div className="search-input">
+            {/* <div className="search-input">
                 <input type="text" placeholder="Search for a dish..." value={searchQuery}
                     onChange={handleInputChange}
                 />
                 <div className="search-icon"></div>
-            </div>
+            </div> */}
         </div>
     )
 }
