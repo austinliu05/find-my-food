@@ -15,6 +15,16 @@ import upvoted from './assets/upvoted.png'
 import downvoted from './assets/downvoted.png'
 
 function App() {
+  function setDate() {
+    var currDate = new Date();
+    const year = currDate.getFullYear();
+    const month = currDate.toLocaleString("default", { month: "long" });
+    const day = currDate.getDate();
+    const myDate = month + " " + day + ", " + year + ".";
+  
+    return myDate;
+  }
+  
   // checking if dining halls are open
   const diningStatus = useDiningStatus();
   // chcek whether or not the device is mobile or desktop
@@ -26,12 +36,7 @@ function App() {
   // checking if arrow is clicked
   const [clicked, setClicked] = useState(false);
   // Which dining halls are selected
-  const [filters, setFilters] = useState({
-    Ratty: false,
-    IvyRoom: false,
-    Andrews: false,
-    VDub: false
-  });
+  const [filters, setFilters] = useState({});
   // State to store the sorted menu items by day and hall
   const [menuByDayAndHall, setMenuByDayAndHall] = useState({
     Sunday: {},
@@ -221,7 +226,7 @@ function App() {
         </div>
       </div>
       <footer>
-        <p>© 2024 Austin Liu. All Rights Reserved.</p>
+        <p className="copyright">Copyright © Austin Liu. {setDate()}</p>
       </footer>
     </div>
   );

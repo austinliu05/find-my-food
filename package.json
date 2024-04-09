@@ -52,5 +52,10 @@
     "setupFiles": [
       "jest-fetch-mock/setupJest.js"
     ]
+  },
+  "overrides": {
+    "@testing-library/react-hooks": {
+      "react": "^18.2.0"
+    }
   }
 }
