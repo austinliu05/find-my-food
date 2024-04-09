@@ -58,9 +58,9 @@ function App() {
   // sorting the given json file into readable code for front end to easily parse and display
   function sortMeals(items) {
 
-    // items is in json format
+    // items is in json format; if items is null ==> leave program
+    if (!items) return
 
-    console.log(items)
     const sortedMeals = {
       Sunday: {},
       Monday: {},
@@ -75,8 +75,6 @@ function App() {
       const day = item.day;
       const hall = item.hall;
       const category = item.category
-
-      // Access item.votes ==>
 
       // Ensure the 'day' object is initialized
       if (!sortedMeals[day]) {
@@ -99,17 +97,23 @@ function App() {
     });
 
     // Sort all categories in all of the checked dining halls (applies only to the CURRENT DAY)
-    const halls = Object.keys(filters).filter(hall => filters[hall]);
-    halls.forEach(diningHall => {
-      Object.keys(sortedMeals[currentDay][diningHall]).forEach(categoryType => {
-        sortedMeals[currentDay][diningHall][categoryType] =
-          sortedMeals[currentDay][diningHall][categoryType].sort((item1, item2) => { return item2.votes - item1.votes });
+    try {
+      const halls = Object.keys(filters).filter(hall => filters[hall]);
+      halls.forEach(diningHall => {
+        Object.keys(sortedMeals[currentDay][diningHall]).forEach(categoryType => {
+          sortedMeals[currentDay][diningHall][categoryType] =
+            sortedMeals[currentDay][diningHall][categoryType].sort((item1, item2) => { return item2.votes - item1.votes });
+        });
       });
-    });
+    }
+    catch (error) {
+      console.log("ERROR: No items exist for the current day");
+    }
+
 
     setVotes(sortedVotes);
     setMenuByDayAndHall(sortedMeals);
-    console.log(sortedMeals)
+    //console.log(sortedMeals)
   }
 
   // Helper function for obtaining the average votes among a specific categories:
