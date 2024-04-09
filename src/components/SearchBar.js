@@ -1,7 +1,7 @@
 import '../App.js'
 import './SearchBar.css'
 import { useState } from 'react';
-// import React from 'react'
+import magGlass from '../assets/magnifyingGlass.png'
 
 // SearchBar component applies to only one specific dining hall
 //      Parameter: allFoodItems - list of all dishes for specific dining hall
@@ -17,12 +17,14 @@ function SearchBar({ onSearchQueryChange }) {
     };
     return (
         <div className="search-bar">
-            {/* <div className="search-input">
+            <div className="search-input">
                 <input type="text" placeholder="Search for a dish..." value={searchQuery}
                     onChange={handleInputChange}
                 />
-                <div className="search-icon"></div>
-            </div> */}
+                <div className='search-icon'>
+                    <img className='glass' src={magGlass}/>
+                </div>
+            </div>
         </div>
     )
 }

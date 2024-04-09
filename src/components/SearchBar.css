@@ -1,3 +1,40 @@
+.search-bar{
+    margin-top: 5%;
+}
 .search-input {
-    margin: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    box-sizing: border-box;
+    margin: 2% auto 1%; /* Top and bottom margins as before, auto for left and right */
+}
+
+.search-input input[type="text"] {
+    flex-grow: 1; /* Allows the input to fill available space */
+    padding: 20px;
+    height: 50px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: large;
+    /* Ensure there's some space between the input and the icon */
+}
+
+.search-icon {
+    display: flex; /* Use flex for alignment if needed */
+    align-items: center; /* Center the icon vertically */
+    justify-content: center; /* Center the icon's content, if it has any */
+    cursor: pointer;
+    /* Add icon dimensions and background here */
+    width: 50px; /* Example width */
+    height: 50px; /* Example height */
+    border-radius: 10%;
+    background-color: rgb(197, 197, 197);
+}
+.search-icon img{
+    width: 80%;
+}
+.search-icon:hover{
+    background-color: rgb(153, 153, 153);
 }
