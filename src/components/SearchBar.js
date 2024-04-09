@@ -8,12 +8,12 @@ import magGlass from '../assets/magnifyingGlass.png'
 function SearchBar({ onSearchQueryChange }) {
     // State to keep track of the search query
     const [searchQuery, setSearchQuery] = useState('');
-      // Event handler for input changes
+    // Event handler for input changes
     const handleInputChange = (event) => {
         // Update the state with the new input value
         setSearchQuery(event.target.value);
-        console.log("The item being searched: " + searchQuery)
-        onSearchQueryChange(searchQuery);
+        console.log("The item being searched: " + event.target.value)
+        onSearchQueryChange(event.target.value);
     };
     return (
         <div className="search-bar">
