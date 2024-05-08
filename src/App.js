@@ -219,6 +219,7 @@ function App() {
           handleVote={handleVote}
           clicked={clicked} />}
         <div className='disclaimer'>
+          <p>MENU WILL NOT BE UPDATED OVER SUMMER</p>
           <p>**Updates every Monday morning**</p>
           <p>Breakfast: before 11:00 am</p>
           <p>Lunch: 11:00am - 4:00 pm</p>
