@@ -1,6 +1,6 @@
-# Overview
-
 # Brown University Find My Food
+
+https://brownfood.netlify.app/
 
 Welcome to the Brown University Find My Food project! This web application is designed to streamline the search for preferred dining hall meals at Brown University, providing an enhanced meal selection experience.
 
@@ -28,5 +28,3 @@ The inspiration for this project stemmed from observing the suboptimal usage of 
 - **Web Scraping**: Python (BeautifulSoup, Requests), AWS Lambda
 - **Storage**: AWS S3
 - **Hosting**: Netlify (for frontend), AWS (for backend and data processing)
-
-https://brownfood.netlify.app/
