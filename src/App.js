@@ -7,7 +7,7 @@ import useMealStatus from './hooks/useMealStatus';
 import Banner from './components/Banner'
 import DesktopContainer from './components/DesktopContainer'
 import MobileContainer from './components/MobileContainer'
-
+import Modal from './Modal';
 import { fetchByName, fetchMenuItems, updateVote } from './api';
 import upArrow from './assets/upArrow.png'
 import downArrow from './assets/downArrow.png'
@@ -15,16 +15,18 @@ import upvoted from './assets/upvoted.png'
 import downvoted from './assets/downvoted.png'
 
 function App() {
+  const [isModalOpen, setIsModalOpen] = useState(true);  // Modal opens on load
+  
   function setDate() {
     var currDate = new Date();
     const year = currDate.getFullYear();
     const month = currDate.toLocaleString("default", { month: "long" });
     const day = currDate.getDate();
     const myDate = month + " " + day + ", " + year + ".";
-  
+
     return myDate;
   }
-  
+
   // checking if dining halls are open
   const diningStatus = useDiningStatus();
   // chcek whether or not the device is mobile or desktop
@@ -184,6 +186,7 @@ function App() {
   };
   return (
     <div>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       <div className='page-container'>
         <Banner mobile={mobileStatus} filters={filters} setFilters={setFilters}
           ratty={diningStatus.ratty} andrews={diningStatus.andrews} ivy={diningStatus.ivy} vdub={diningStatus.vdub} />
